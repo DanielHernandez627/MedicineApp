@@ -1,0 +1,17 @@
+<!-- res/drawable/rounded_rectangle.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Color de fondo del rectángulo -->
+    <solid android:color="@color/principalBlue" /> <!-- Cambia este color por el que desees -->
+
+    <!-- Esquinas redondeadas solo en la parte superior -->
+    <corners
+        android:topLeftRadius="16dp"
+        android:topRightRadius="16dp"
+        android:bottomLeftRadius="0dp"
+        android:bottomRightRadius="0dp" />
+
+
+
+</shape>
