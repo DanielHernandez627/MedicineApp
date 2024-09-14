@@ -8,4 +8,5 @@
     <string name="tlEmail">Correo Electronico</string>
     <string name="tlPass">Contraseña</string>
     <string name="btnIniciarSesion">Inicio de Sesion</string>
+    <string name="client_id">485190195176-eqslfva3aq2bncunk18siqbd6os27rio.apps.googleusercontent.com</string>
 </resources>
