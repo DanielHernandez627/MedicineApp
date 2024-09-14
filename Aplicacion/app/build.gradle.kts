@@ -4,7 +4,7 @@ plugins {
 
 android {
     namespace = "com.medicine.deliverycontrol"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.medicine.deliverycontrol"
@@ -40,4 +40,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.play.services.auth)
+    implementation(libs.credentials)
+    implementation(libs.credentials.play.services.auth)
 }

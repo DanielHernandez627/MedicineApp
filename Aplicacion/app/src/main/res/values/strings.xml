@@ -3,4 +3,9 @@
     <string name="tlPrincipal">Bienvenidos, MDCS</string>
     <string name="tlSegundario">Medicine Delivery Control System.</string>
     <string name="btnPrincipal">Iniciar</string>
+    <string name="btnLogin">Ingresar con</string>
+    <string name="tlLogin">MDCS</string>
+    <string name="tlEmail">Correo Electronico</string>
+    <string name="tlPass">Contraseña</string>
+    <string name="btnIniciarSesion">Inicio de Sesion</string>
 </resources>

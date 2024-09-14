@@ -59,10 +59,11 @@
         android:layout_height="48dp"
         android:layout_marginStart="116dp"
         android:layout_marginTop="24dp"
-        android:text="@string/btnPrincipal"
-        android:textColor="@color/black"
         android:backgroundTint="@color/principalYellow"
+        android:onClick="onClick_Login"
+        android:text="@string/btnPrincipal"
         android:textAlignment="center"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView3" />
 
