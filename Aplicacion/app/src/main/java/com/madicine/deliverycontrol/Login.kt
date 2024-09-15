@@ -1,14 +1,31 @@
 package com.madicine.deliverycontrol
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
+import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class Login : AppCompatActivity() {
+
+    private lateinit var btnIniciarSesion: Button
+    private lateinit var txt_email: EditText
+    private lateinit var txt_pass: EditText
+    private lateinit var auth: FirebaseAuth;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        FirebaseApp.initializeApp(this)
+        auth = Firebase.auth
+        auth = FirebaseAuth.getInstance()
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -16,5 +33,44 @@ class Login : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        btnIniciarSesion = findViewById(R.id.btnIniciarSesion)
+        txt_email = findViewById(R.id.txt_email)
+        txt_pass = findViewById(R.id.txt_pass)
+
+        setUp()
+    }
+
+    private fun setUp(){
+        btnIniciarSesion.setOnClickListener{
+            if (txt_email.text.isNotEmpty() && txt_pass.text.isNotEmpty()){
+                val email = txt_email.text.toString()
+                val pass = txt_pass.text.toString()
+                auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
+                    if(it.isSuccessful){
+                        showHome(it.result?.user?.email ?: "",ProviderType.BASIC)
+                    }else{
+                        showAlert()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showAlert(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("Se ha producido un error autenticando al usuario")
+        builder.setPositiveButton("Aceptar",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun showHome(email:String, provider: ProviderType){
+        val menuIntent = Intent(this,menuPrincipal::class.java).apply {
+            putExtra("email",email)
+            putExtra("provider",provider.name)
+        }
+        startActivity(menuIntent)
     }
 }
