@@ -44,21 +44,5 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this,Login::class.java)
             startActivity(intent)
         }
-
-        //checkFirebaseAuthentication()
     }
-
-    /*private fun checkFirebaseAuthentication() {
-        auth.signInAnonymously()
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // Inicio de sesión anónimo exitoso
-                    val user: FirebaseUser? = auth.currentUser
-                    Toast.makeText(this,"Inicio de sesión exitoso, usuario: ${user?.uid}",Toast.LENGTH_LONG).show()
-                } else {
-                    // Fallo en la conexión
-                    Toast.makeText(this,"Fallo en la conexión a Firebase Authentication",Toast.LENGTH_LONG).show()
-                }
-            }
-    }*/
 }

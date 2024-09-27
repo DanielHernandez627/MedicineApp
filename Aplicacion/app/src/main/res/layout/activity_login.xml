@@ -94,16 +94,30 @@
         app:layout_constraintTop_toBottomOf="@+id/tl_pass" />
 
     <Button
+        android:id="@+id/btn_register_redirect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:text="¿No tienes una cuenta? Regístrate"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_pass" />
+
+    <Button
         android:id="@+id/btnIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginTop="30dp"
-        android:text="@string/btnIniciarSesion"
         android:backgroundTint="@color/btnBlue"
+        android:text="@string/btnIniciarSesion"
         android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_pass" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_register_redirect" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

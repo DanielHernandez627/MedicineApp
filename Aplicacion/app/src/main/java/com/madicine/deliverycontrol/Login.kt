@@ -20,6 +20,7 @@ class Login : AppCompatActivity() {
     private lateinit var txt_email: EditText
     private lateinit var txt_pass: EditText
     private lateinit var auth: FirebaseAuth;
+    private lateinit var btn_register_redirect: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +38,7 @@ class Login : AppCompatActivity() {
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion)
         txt_email = findViewById(R.id.txt_email)
         txt_pass = findViewById(R.id.txt_pass)
+        btn_register_redirect = findViewById(R.id.btn_register_redirect)
 
         setUp()
     }
@@ -54,6 +56,11 @@ class Login : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        btn_register_redirect.setOnClickListener{
+            val intent = Intent(this,registroUser::class.java)
+            startActivity(intent)
         }
     }
 

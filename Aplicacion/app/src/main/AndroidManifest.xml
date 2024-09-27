@@ -15,6 +15,9 @@
         android:theme="@style/Theme.Deliverycontrol"
         tools:targetApi="31">
         <activity
+            android:name=".registroUser"
+            android:exported="false" />
+        <activity
             android:name=".menuPrincipal"
             android:exported="false" />
         <activity
