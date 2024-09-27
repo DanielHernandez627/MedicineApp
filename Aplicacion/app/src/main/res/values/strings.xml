@@ -3,4 +3,20 @@
     <string name="tlPrincipal">Bienvenidos, MDCS</string>
     <string name="tlSegundario">Medicine Delivery Control System.</string>
     <string name="btnPrincipal">Iniciar</string>
+    <string name="btnLogin">Ingresar con</string>
+    <string name="tlLogin">MDCS</string>
+    <string name="tlEmail">Correo Electronico</string>
+    <string name="tlPass">Contraseña</string>
+    <string name="btnIniciarSesion">Inicio de Sesion</string>
+
+    <!--Registro -->
+    <string name="register_title">Registro de Usuario</string>
+    <string name="btn_register">Registrar</string>
+    <string name="hint_email">Correo Electrónico</string>
+    <string name="hint_confirm_email">Confirmar Correo Electrónico</string>
+    <string name="hint_password">Contraseña</string>
+    <string name="hint_confirm_password">Confirmar Contraseña</string>
+    <string name="warning_email_not_match">Los correos no coinciden</string>
+    <string name="warning_password_not_match">Las contraseñas no coinciden</string>
+    <!--Registro -->
 </resources>
