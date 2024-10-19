@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.madicine.deliverycontrol.Interfaces.PermissionHandler
+import com.madicine.deliverycontrol.Utilities.PermissionsUtils
 
 enum class ProviderType {
     BASIC
@@ -22,6 +24,7 @@ enum class ProviderType {
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var permissionHandler: PermissionHandler
     private lateinit var btnPrincipal: Button
     private lateinit var auth: FirebaseAuth
 
@@ -38,8 +41,18 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        permissionHandler = PermissionsUtils
+
         btnPrincipal = findViewById(R.id.btnPrincipal)
 
+        if (!permissionHandler.verifyCameraPermission(this)){
+            permissionHandler.requestCameraPermission(this);
+        }
+
+        setUp()
+    }
+
+    private fun setUp(){
         btnPrincipal.setOnClickListener {
             val intent = Intent(this,Login::class.java)
             startActivity(intent)
