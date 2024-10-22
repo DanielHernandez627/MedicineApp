@@ -97,7 +97,7 @@ class registroUser : AppCompatActivity() {
     }
 
     private fun showHome(email:String, provider: ProviderType){
-        val menuIntent = Intent(this,menuPrincipal::class.java).apply {
+        val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
             putExtra("email",email)
             putExtra("provider",provider.name)
         }
