@@ -19,4 +19,8 @@
     <string name="warning_email_not_match">Los correos no coinciden</string>
     <string name="warning_password_not_match">Las contraseñas no coinciden</string>
     <!--Registro -->
+
+    <!--Menu Principal -->
+    <string name="tlPrincipalMenu">Inicio</string>
+    <!--Menu Principal -->
 </resources>
