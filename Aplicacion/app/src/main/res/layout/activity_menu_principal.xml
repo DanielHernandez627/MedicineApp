@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgLogo"
         android:layout_width="93dp"
         android:layout_height="69dp"
         android:layout_marginTop="15dp"
@@ -30,15 +30,36 @@
         app:srcCompat="@drawable/iconprincipal" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/imgFondo"
         android:layout_width="379dp"
         android:layout_height="225dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tlPrincipalMenu"
         app:srcCompat="@drawable/profilecard" />
 
+    <ImageView
+        android:id="@+id/imgUser"
+        android:layout_width="118dp"
+        android:layout_height="67dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="40dp"
+        app:layout_constraintEnd_toEndOf="@+id/imgFondo"
+        app:layout_constraintTop_toTopOf="@+id/imgFondo"
+        app:srcCompat="@drawable/defaultuser" />
+
+    <TextView
+        android:id="@+id/tlUsuario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/tlUsuario"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toStartOf="@+id/imgUser"
+        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintStart_toStartOf="@+id/imgFondo"
+        app:layout_constraintTop_toTopOf="@+id/imgFondo" />
 
     <TextView
         android:id="@+id/tl_email2"
@@ -49,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/imgFondo" />
 
     <Button
         android:id="@+id/btn_cerrar"
@@ -92,5 +113,7 @@
         app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tl_email2" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

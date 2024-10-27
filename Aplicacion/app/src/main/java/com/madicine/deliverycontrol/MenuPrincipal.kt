@@ -11,12 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.Interfaces.PermissionHandler
 import com.madicine.deliverycontrol.Utilities.PermissionsUtils
 
 class MenuPrincipal : AppCompatActivity() {
 
     private lateinit var permissionHandler: PermissionHandler
+    private lateinit var tl_usuario: TextView
     private lateinit var tl_email2: TextView
     private lateinit var tl_provider: TextView
     private lateinit var tlCodigo: TextView
@@ -43,6 +45,7 @@ class MenuPrincipal : AppCompatActivity() {
             permissionHandler.requestCameraPermission(this)
         }
 
+        tl_usuario = findViewById(R.id.tlUsuario);
         tl_email2 = findViewById(R.id.tl_email2)
         tl_provider = findViewById(R.id.tl_provider)
         tlCodigo = findViewById(R.id.tlCodigo)
@@ -50,8 +53,9 @@ class MenuPrincipal : AppCompatActivity() {
         btnCamara = findViewById(R.id.btnCamara)
 
         val bundle = intent.extras
-        val email = bundle?.getString("email")
-        val provider = bundle?.getString("provider")
+        val usuario = bundle?.getSerializable("usuario") as? Usuario
+        val email = usuario?.email
+        val provider = usuario?.udi
         setup(email ?: "", provider ?: "")
 
         barcodeScannerLauncher = registerForActivityResult(
@@ -65,6 +69,7 @@ class MenuPrincipal : AppCompatActivity() {
     }
 
     private fun setup(email: String, provider: String) {
+        tl_usuario.text = email
         tl_email2.text = email
         tl_provider.text = provider
 

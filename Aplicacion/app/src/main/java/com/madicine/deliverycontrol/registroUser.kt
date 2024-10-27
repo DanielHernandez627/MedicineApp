@@ -16,6 +16,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.madicine.deliverycontrol.Entities.Usuario
 
 class registroUser : AppCompatActivity() {
 
@@ -23,6 +24,8 @@ class registroUser : AppCompatActivity() {
     private lateinit var etConfirmEmail: EditText
     private lateinit var etPassword: EditText
     private lateinit var etConfirmPassword: EditText
+    private lateinit var etNombre: EditText
+    private lateinit var etApellido: EditText
     private lateinit var tvEmailWarning: TextView
     private lateinit var tvPasswordWarning: TextView
     private lateinit var btnRegister: Button
@@ -45,6 +48,8 @@ class registroUser : AppCompatActivity() {
         etConfirmEmail = findViewById(R.id.et_confirm_email)
         etPassword = findViewById(R.id.et_password)
         etConfirmPassword = findViewById(R.id.et_confirm_password)
+        etNombre = findViewById(R.id.et_nombre)
+        etApellido = findViewById(R.id.et_apellido)
         tvEmailWarning = findViewById(R.id.tv_email_warning)
         tvPasswordWarning = findViewById(R.id.tv_password_warning)
         btnRegister = findViewById(R.id.btn_register)
@@ -57,7 +62,7 @@ class registroUser : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(),etConfirmPassword.text.toString())
                     .addOnCompleteListener {
                         if (it.isSuccessful){
-                            showHome(it.result?.user?.email ?: "",ProviderType.BASIC)
+                            showHome(it.result?.user?.email ?: "",etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
                         }else{
                             showAlert()
                         }
@@ -96,9 +101,12 @@ class registroUser : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email:String, provider: ProviderType){
+    private fun showHome(email:String,nombre: String, apellido: String, provider: ProviderType){
+        val uid = auth.currentUser?.uid
+        val usuario = Usuario(uid ,email,nombre,apellido);
+
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
-            putExtra("email",email)
+            putExtra("usuario",usuario)
             putExtra("provider",provider.name)
         }
         menuIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
