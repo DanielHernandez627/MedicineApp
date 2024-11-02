@@ -1,6 +1,7 @@
 package com.madicine.deliverycontrol
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -14,17 +15,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.Interfaces.PermissionHandler
 import com.madicine.deliverycontrol.Utilities.PermissionsUtils
+import java.text.SimpleDateFormat
+import java.time.ZoneOffset
+import java.time.ZonedDateTime
+import java.util.Locale
 
 class MenuPrincipal : AppCompatActivity() {
 
     private lateinit var permissionHandler: PermissionHandler
     private lateinit var tl_usuario: TextView
+    private lateinit var tl_fecha: TextView
     private lateinit var tl_email2: TextView
     private lateinit var tl_provider: TextView
     private lateinit var tlCodigo: TextView
     private lateinit var btn_cerrar: Button
     private lateinit var btnCamara: Button
     private lateinit var barcodeScannerLauncher: ActivityResultLauncher<Intent>
+    private var usuario: Usuario? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,17 +53,37 @@ class MenuPrincipal : AppCompatActivity() {
         }
 
         tl_usuario = findViewById(R.id.tlUsuario);
+        tl_fecha = findViewById(R.id.tlFecha)
         tl_email2 = findViewById(R.id.tl_email2)
         tl_provider = findViewById(R.id.tl_provider)
         tlCodigo = findViewById(R.id.tlCodigo)
         btn_cerrar = findViewById(R.id.btn_cerrar)
         btnCamara = findViewById(R.id.btnCamara)
 
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val currentDate = sdf.format(System.currentTimeMillis())
+        tl_fecha.text = currentDate
+
         val bundle = intent.extras
-        val usuario = bundle?.getSerializable("usuario") as? Usuario
+
+        //Recuperar datos del usuario
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            usuario = bundle?.getSerializable("usuario", Usuario::class.java)
+        }else{
+            usuario = bundle?.getSerializable("usuario") as? Usuario
+        }
+
+        val nombre = usuario?.nombre + " " + usuario?.apellido
         val email = usuario?.email
         val provider = usuario?.udi
-        setup(email ?: "", provider ?: "")
+
+        //Datos de usuario
+        tl_usuario.text = nombre
+        tl_email2.text = email
+        tl_provider.text = provider
+
+        //Configuración
+        setup()
 
         barcodeScannerLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -68,10 +95,7 @@ class MenuPrincipal : AppCompatActivity() {
         }
     }
 
-    private fun setup(email: String, provider: String) {
-        tl_usuario.text = email
-        tl_email2.text = email
-        tl_provider.text = provider
+    private fun setup() {
 
         btn_cerrar.setOnClickListener {
             FirebaseAuth.getInstance().signOut()

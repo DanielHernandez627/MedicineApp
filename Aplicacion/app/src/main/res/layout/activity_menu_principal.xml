@@ -55,11 +55,26 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/tlUsuario"
-        android:textSize="13sp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:textColor="@color/textMPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
         app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
         app:layout_constraintTop_toTopOf="@+id/imgFondo" />
+
+    <TextView
+        android:id="@+id/tlFecha"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="@string/tlUsuario"
+        android:textSize="13sp"
+        android:textColor="@color/textMPrincipal"
+        app:layout_constraintEnd_toStartOf="@+id/imgUser"
+        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintStart_toStartOf="@+id/imgFondo"
+        app:layout_constraintTop_toBottomOf="@+id/tlUsuario" />
 
     <TextView
         android:id="@+id/tl_email2"

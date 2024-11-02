@@ -26,4 +26,8 @@
     <string name="tlPrincipalMenu">Inicio</string>
     <string name="tlUsuario">Texto</string>
     <!--Menu Principal -->
+
+    <!--Nombre SharedPreferences -->
+    <string name="prefs_file">deliverycontrol_prefs</string>
+    <!--Nombre SharedPreferences -->
 </resources>

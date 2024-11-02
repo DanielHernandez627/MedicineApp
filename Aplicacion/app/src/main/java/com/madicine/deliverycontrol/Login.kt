@@ -13,6 +13,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.madicine.deliverycontrol.Entities.Usuario
 
 class Login : AppCompatActivity() {
 
@@ -50,7 +51,7 @@ class Login : AppCompatActivity() {
                 val pass = txt_pass.text.toString()
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
                     if(it.isSuccessful){
-                        showHome(it.result?.user?.email ?: "",ProviderType.BASIC)
+                        showHome(it.result?.user?.email ?: "","Hola","Mundo",it.result?.user?.uid ?: "",ProviderType.BASIC)
                     }else{
                         showAlert()
                     }
@@ -73,9 +74,10 @@ class Login : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email:String, provider: ProviderType){
+    private fun showHome(email:String,nombre: String, apellido: String,uid: String?, provider: ProviderType){
+        val usuario = Usuario(uid ,nombre,apellido,email,"");
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
-            putExtra("email",email)
+            putExtra("usuario",usuario)
             putExtra("provider",provider.name)
         }
         startActivity(menuIntent)

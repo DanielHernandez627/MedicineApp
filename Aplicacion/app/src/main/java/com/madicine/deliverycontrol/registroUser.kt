@@ -103,7 +103,7 @@ class registroUser : AppCompatActivity() {
 
     private fun showHome(email:String,nombre: String, apellido: String, provider: ProviderType){
         val uid = auth.currentUser?.uid
-        val usuario = Usuario(uid ,email,nombre,apellido);
+        val usuario = Usuario(uid ,nombre,apellido,email,"");
 
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
             putExtra("usuario",usuario)
