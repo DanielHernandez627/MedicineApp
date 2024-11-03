@@ -25,7 +25,7 @@ class Login : AppCompatActivity() {
     private lateinit var txt_pass: EditText
     private lateinit var auth: FirebaseAuth;
     private lateinit var btn_register_redirect: Button
-    private lateinit var imgBGoogle: ImageButton
+    private lateinit var imgBGoogle: Button
     private val GOOGLE_SIGN_IN = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {

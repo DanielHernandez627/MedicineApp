@@ -27,11 +27,8 @@ class MenuPrincipal : AppCompatActivity() {
     private lateinit var permissionHandler: PermissionHandler
     private lateinit var tl_usuario: TextView
     private lateinit var tl_fecha: TextView
-    private lateinit var tl_email2: TextView
-    private lateinit var tl_provider: TextView
     private lateinit var tlCodigo: TextView
-    private lateinit var btn_cerrar: Button
-    private lateinit var btnCamara: Button
+    private lateinit var btnConsulta: Button
     private lateinit var btnILogOut: ImageButton
     private lateinit var barcodeScannerLauncher: ActivityResultLauncher<Intent>
     private var usuario: Usuario? = null
@@ -56,12 +53,8 @@ class MenuPrincipal : AppCompatActivity() {
 
         tl_usuario = findViewById(R.id.tlUsuario);
         tl_fecha = findViewById(R.id.tlFecha)
-        tl_email2 = findViewById(R.id.tl_email2)
-        tl_provider = findViewById(R.id.tl_provider)
-        tlCodigo = findViewById(R.id.tlCodigo)
-        btn_cerrar = findViewById(R.id.btn_cerrar)
-        btnCamara = findViewById(R.id.btnCamara)
         btnILogOut = findViewById(R.id.imgLogOut)
+        btnConsulta = findViewById(R.id.btnConsulta)
 
         val bundle = intent.extras
         //Recuperar datos del usuario
@@ -90,8 +83,6 @@ class MenuPrincipal : AppCompatActivity() {
 
         //Datos de usuario
         tl_usuario.text = nombre
-        tl_email2.text = email
-        tl_provider.text = provider
         tl_fecha.text = currentDate
 
         //Configuración
@@ -109,12 +100,7 @@ class MenuPrincipal : AppCompatActivity() {
 
     private fun setup() {
 
-        btn_cerrar.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            onBackPressed()
-        }
-
-        btnCamara.setOnClickListener {
+        btnConsulta.setOnClickListener {
             if (permissionHandler.verifyCameraPermission(this)) {
                 val intent = Intent(this, BarcodeScanner::class.java)
                 barcodeScannerLauncher.launch(intent) // Usar barcodeScannerLauncher para iniciar la actividad

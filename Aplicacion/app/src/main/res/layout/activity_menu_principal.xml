@@ -21,8 +21,8 @@
 
     <ImageButton
         android:id="@+id/imgLogOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="37dp"
+        android:layout_height="35dp"
         android:layout_marginTop="36dp"
         android:background="@android:color/transparent"
         app:layout_constraintEnd_toStartOf="@+id/tlPrincipalMenu"
@@ -67,9 +67,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="@string/tlUsuario"
+        android:textColor="@color/textMPrincipal"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="@color/textMPrincipal"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
         app:layout_constraintHorizontal_bias="0.402"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
@@ -81,66 +81,66 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
         android:text="@string/tlUsuario"
-        android:textSize="13sp"
         android:textColor="@color/textMPrincipal"
+        android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
         app:layout_constraintHorizontal_bias="0.38"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
         app:layout_constraintTop_toBottomOf="@+id/tlUsuario" />
 
-    <TextView
-        android:id="@+id/tl_email2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="401dp"
+        android:layout_height="66dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgFondo" />
+        app:layout_constraintTop_toBottomOf="@+id/imgFondo"
+        app:srcCompat="@drawable/division" />
 
     <Button
-        android:id="@+id/btn_cerrar"
+        android:id="@+id/btnConsulta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="36dp"
-        android:text="Button"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shape_button_blue"
+        android:drawableBottom="@drawable/ic_camera_custom_size"
+        android:gravity="center"
+        android:text="@string/card_scan"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tl_provider" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/btnCamara"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="116dp"
-        android:layout_marginTop="16dp"
-        android:text="Button"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_cerrar" />
-
-    <TextView
-        android:id="@+id/tlCodigo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnCamara" />
-
-    <TextView
-        android:id="@+id/tl_provider"
+        android:id="@+id/btnMedicamentos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="TextView"
+        android:layout_marginEnd="52dp"
+        android:background="@drawable/shape_button_yellow"
+        android:drawableBottom="@drawable/ic_medicine_custom_size"
+        android:gravity="center"
+        android:text="@string/card_medicine"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tl_email2" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
+    <Button
+        android:id="@+id/btnHistorial"
+        android:layout_width="130dp"
+        android:layout_height="113dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/shape_button_yellow"
+        android:drawableBottom="@drawable/ic_history_custom_size"
+        android:gravity="center"
+        android:text="@string/card_history"
+        android:textColor="@android:color/white"
+        android:textSize="13sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnConsulta" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

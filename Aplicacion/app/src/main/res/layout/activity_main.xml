@@ -59,7 +59,7 @@
         android:layout_width="169dp"
         android:layout_height="48dp"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/principalYellow"
+        android:background="@drawable/shape_button_iniciar"
         android:onClick="onClick_Login"
         android:text="@string/btnPrincipal"
         android:textAlignment="center"

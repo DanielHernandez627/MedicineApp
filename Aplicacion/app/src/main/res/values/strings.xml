@@ -30,4 +30,10 @@
     <!--Nombre SharedPreferences -->
     <string name="prefs_file">deliverycontrol_prefs</string>
     <!--Nombre SharedPreferences -->
+
+    <!--Texto Cards Menu Principal -->
+    <string name="card_scan">Escaneo de \n Medicamento</string>
+    <string name="card_medicine">Busqueda de \n Medicamento</string>
+    <string name="card_history">Historial de \n Busqueda</string>
+    <!--Texto Cards Menu Principal -->
 </resources>
