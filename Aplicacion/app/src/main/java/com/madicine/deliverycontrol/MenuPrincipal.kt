@@ -1,9 +1,11 @@
 package com.madicine.deliverycontrol
 
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -30,6 +32,7 @@ class MenuPrincipal : AppCompatActivity() {
     private lateinit var tlCodigo: TextView
     private lateinit var btn_cerrar: Button
     private lateinit var btnCamara: Button
+    private lateinit var btnILogOut: ImageButton
     private lateinit var barcodeScannerLauncher: ActivityResultLauncher<Intent>
     private var usuario: Usuario? = null
 
@@ -42,7 +45,6 @@ class MenuPrincipal : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
         permissionHandler = PermissionsUtils
 
         /**
@@ -59,13 +61,9 @@ class MenuPrincipal : AppCompatActivity() {
         tlCodigo = findViewById(R.id.tlCodigo)
         btn_cerrar = findViewById(R.id.btn_cerrar)
         btnCamara = findViewById(R.id.btnCamara)
-
-        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val currentDate = sdf.format(System.currentTimeMillis())
-        tl_fecha.text = currentDate
+        btnILogOut = findViewById(R.id.imgLogOut)
 
         val bundle = intent.extras
-
         //Recuperar datos del usuario
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
             usuario = bundle?.getSerializable("usuario", Usuario::class.java)
@@ -75,12 +73,26 @@ class MenuPrincipal : AppCompatActivity() {
 
         val nombre = usuario?.nombre + " " + usuario?.apellido
         val email = usuario?.email
+        val uid = usuario?.udi
         val provider = usuario?.udi
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val currentDate = sdf.format(System.currentTimeMillis())
+
+        /**
+         * Proceso de guardado de datos en shared preferences
+         * */
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
+        prefs.putString("email", email)
+        prefs.putString("uid",uid)
+        prefs.putString("nombre",nombre)
+        prefs.apply()
+
 
         //Datos de usuario
         tl_usuario.text = nombre
         tl_email2.text = email
         tl_provider.text = provider
+        tl_fecha.text = currentDate
 
         //Configuración
         setup()
@@ -107,6 +119,17 @@ class MenuPrincipal : AppCompatActivity() {
                 val intent = Intent(this, BarcodeScanner::class.java)
                 barcodeScannerLauncher.launch(intent) // Usar barcodeScannerLauncher para iniciar la actividad
             }
+        }
+
+        btnILogOut.setOnClickListener {
+            //Borrado de datos de SharedPreferenses
+            val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
+            prefs.clear()
+            prefs.apply()
+
+            //Cerrar sesión de firebase
+            FirebaseAuth.getInstance().signOut()
+            onBackPressed()
         }
     }
 }
