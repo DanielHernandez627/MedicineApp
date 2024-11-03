@@ -14,11 +14,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.Interfaces.PermissionHandler
 import com.madicine.deliverycontrol.Utilities.PermissionsUtils
 
 enum class ProviderType {
-    BASIC
+    BASIC,
+    GOOGLE
 }
 
 
@@ -50,12 +52,28 @@ class MainActivity : AppCompatActivity() {
         }
 
         setUp()
+        session()
     }
 
     private fun setUp(){
         btnPrincipal.setOnClickListener {
             val intent = Intent(this,Login::class.java)
             startActivity(intent)
+        }
+    }
+
+    private fun session(){
+        val  prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)
+        val email = prefs.getString("email",null)
+        val uid = prefs.getString("uid",null)
+        val nombre = prefs.getString("nombre",null)
+
+        if(email != null && uid != null && nombre != null){
+            val usuario = Usuario(uid,nombre,"",email,"")
+            val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
+                putExtra("usuario",usuario)
+            }
+            startActivity(menuIntent)
         }
     }
 }

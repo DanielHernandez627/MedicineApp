@@ -4,5 +4,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="principalBlue">#00639F</color>
     <color name="principalYellow">#FFB000</color>
+    <color name="cardblue">#0D3B66</color>
     <color name="btnBlue">#043B5C</color>
+    <color name="textMPrincipal">#043B5C</color>
 </resources>

@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
-    android:background="@android:color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
     tools:context=".registroUser">
 
     <!-- Título Registro -->
@@ -13,7 +13,7 @@
         android:id="@+id/tv_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="75dp"
         android:text="@string/register_title"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -26,13 +26,13 @@
         android:id="@+id/et_email"
         android:layout_width="290dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rounded_edittext"
         android:hint="@string/hint_email"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_register" />
 
@@ -41,84 +41,115 @@
         android:id="@+id/et_confirm_email"
         android:layout_width="290dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rounded_edittext"
         android:hint="@string/hint_confirm_email"
         android:inputType="textEmailAddress"
         android:textAlignment="center"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <!-- Texto de advertencia para correos no coincidentes -->
+
     <TextView
         android:id="@+id/tv_email_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
         android:layout_marginTop="4dp"
+        android:visibility="gone"
         android:text="@string/warning_email_not_match"
         android:textColor="@android:color/holo_red_dark"
-        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_confirm_email" />
 
-    <!-- Campo para ingresar contraseña -->
+    <EditText
+        android:id="@+id/et_nombre"
+        android:layout_width="290dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="@string/hint_nombre"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_confirm_email" />
+
+    <EditText
+        android:id="@+id/et_apellido"
+        android:layout_width="290dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="@string/hint_apellido"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_nombre" />
+
     <EditText
         android:id="@+id/et_password"
         android:layout_width="290dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rounded_edittext"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
         android:textAlignment="center"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_email_warning" />
+        app:layout_constraintTop_toBottomOf="@+id/et_apellido" />
 
-    <!-- Campo para confirmar contraseña -->
     <EditText
         android:id="@+id/et_confirm_password"
         android:layout_width="290dp"
         android:layout_height="48dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/rounded_edittext"
         android:hint="@string/hint_confirm_password"
         android:inputType="textPassword"
         android:textAlignment="center"
         android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_password" />
 
     <!-- Texto de advertencia para contraseñas no coincidentes -->
+
+    <!-- Botón de registro -->
+
     <TextView
         android:id="@+id/tv_password_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="4dp"
         android:text="@string/warning_password_not_match"
         android:textColor="@android:color/holo_red_dark"
+        android:layout_marginTop="4dp"
         android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
 
-    <!-- Botón de registro -->
     <Button
         android:id="@+id/btn_register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="30dp"
-        android:textSize="20sp"
+        android:layout_marginTop="52dp"
         android:backgroundTint="@color/btnBlue"
         android:text="@string/btn_register"
         android:textColor="@color/white"
+        android:textSize="23sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password_warning" />
+        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

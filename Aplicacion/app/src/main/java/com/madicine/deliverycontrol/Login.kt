@@ -4,15 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.madicine.deliverycontrol.Entities.Usuario
 
 class Login : AppCompatActivity() {
 
@@ -21,6 +25,8 @@ class Login : AppCompatActivity() {
     private lateinit var txt_pass: EditText
     private lateinit var auth: FirebaseAuth;
     private lateinit var btn_register_redirect: Button
+    private lateinit var imgBGoogle: Button
+    private val GOOGLE_SIGN_IN = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +45,7 @@ class Login : AppCompatActivity() {
         txt_email = findViewById(R.id.txt_email)
         txt_pass = findViewById(R.id.txt_pass)
         btn_register_redirect = findViewById(R.id.btn_register_redirect)
+        imgBGoogle = findViewById(R.id.imgBGoogle)
 
         setUp()
     }
@@ -50,7 +57,7 @@ class Login : AppCompatActivity() {
                 val pass = txt_pass.text.toString()
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
                     if(it.isSuccessful){
-                        showHome(it.result?.user?.email ?: "",ProviderType.BASIC)
+                        showHome(it.result?.user?.email ?: "","Hola","Mundo",it.result?.user?.uid ?: "",ProviderType.BASIC)
                     }else{
                         showAlert()
                     }
@@ -62,6 +69,17 @@ class Login : AppCompatActivity() {
             val intent = Intent(this,registroUser::class.java)
             startActivity(intent)
         }
+
+        /*imgBGoogle.setOnClickListener{
+            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            val googleClient = GoogleSignIn.getClient(this,googleConf)
+
+            startActivityForResult(googleClient.signInIntent,GOOGLE_SIGN_IN)
+        }*/
     }
 
     private fun showAlert(){
@@ -73,9 +91,10 @@ class Login : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email:String, provider: ProviderType){
+    private fun showHome(email:String,nombre: String, apellido: String,uid: String?, provider: ProviderType){
+        val usuario = Usuario(uid ,nombre,apellido,email,"");
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
-            putExtra("email",email)
+            putExtra("usuario",usuario)
             putExtra("provider",provider.name)
         }
         startActivity(menuIntent)
