@@ -67,7 +67,6 @@ class MenuPrincipal : AppCompatActivity() {
         val nombre = usuario?.nombre + " " + usuario?.apellido
         val email = usuario?.email
         val uid = usuario?.udi
-        val provider = usuario?.udi
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val currentDate = sdf.format(System.currentTimeMillis())
 

@@ -36,4 +36,8 @@
     <string name="card_medicine">Busqueda de \n Medicamento</string>
     <string name="card_history">Historial de \n Busqueda</string>
     <!--Texto Cards Menu Principal -->
+
+    <!--Cadena para consumo de APIs -->
+    <string name="Url">http://127.0.0.1:8000/api/</string>
+    <!--Cadena para consumo de APIs -->
 </resources>
