@@ -25,6 +25,7 @@
     <!--Menu Principal -->
     <string name="tlPrincipalMenu">Inicio</string>
     <string name="tlUsuario">Texto</string>
+    <string name="alertLogOut">¿Desea cerrar sesión?</string>
     <!--Menu Principal -->
 
     <!--Nombre SharedPreferences -->

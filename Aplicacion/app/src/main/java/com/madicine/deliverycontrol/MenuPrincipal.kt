@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -107,6 +108,20 @@ class MenuPrincipal : AppCompatActivity() {
         }
 
         btnILogOut.setOnClickListener {
+            logOut()
+        }
+    }
+
+    /**
+     * Metodo para cerrar sesión
+     */
+    private fun logOut(){
+        val builder = AlertDialog.Builder(this)
+
+        builder.setMessage(R.string.alertLogOut)
+
+        // Configuración del botón "Sí"
+        builder.setPositiveButton("Sí") { dialog, _ ->
             //Borrado de datos de SharedPreferenses
             val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
             prefs.clear()
@@ -115,6 +130,16 @@ class MenuPrincipal : AppCompatActivity() {
             //Cerrar sesión de firebase
             FirebaseAuth.getInstance().signOut()
             onBackPressed()
+
+            dialog.dismiss()
         }
+
+        // Configuración del botón "No"
+        builder.setNegativeButton("No") { dialog, _ ->
+            dialog.dismiss()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }
