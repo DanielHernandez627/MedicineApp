@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.madicine.deliverycontrol"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.madicine.deliverycontrol"

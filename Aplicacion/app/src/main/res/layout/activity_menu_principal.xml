@@ -68,10 +68,10 @@
         android:layout_marginTop="40dp"
         android:text="@string/tlUsuario"
         android:textColor="@color/textMPrincipal"
-        android:textSize="18sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
-        app:layout_constraintHorizontal_bias="0.402"
+        app:layout_constraintHorizontal_bias="0.429"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
         app:layout_constraintTop_toTopOf="@+id/imgFondo" />
 
@@ -141,6 +141,16 @@
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnConsulta" />
+
+    <TextView
+        android:id="@+id/tlDatos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="60dp"
+        android:text="TextView"
+        app:layout_constraintStart_toEndOf="@+id/btnHistorial"
+        app:layout_constraintTop_toBottomOf="@+id/btnMedicamentos" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

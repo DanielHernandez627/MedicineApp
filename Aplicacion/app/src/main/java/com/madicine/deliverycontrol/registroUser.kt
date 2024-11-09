@@ -8,15 +8,18 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.madicine.deliverycontrol.Entities.Usuario
+import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
 
 class registroUser : AppCompatActivity() {
 
@@ -30,6 +33,10 @@ class registroUser : AppCompatActivity() {
     private lateinit var tvPasswordWarning: TextView
     private lateinit var btnRegister: Button
     private lateinit var auth: FirebaseAuth;
+    private var email: String? = null
+
+    //Declaracion de variable ViewModel
+    private val viewModel: UsuariosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +60,19 @@ class registroUser : AppCompatActivity() {
         tvEmailWarning = findViewById(R.id.tv_email_warning)
         tvPasswordWarning = findViewById(R.id.tv_password_warning)
         btnRegister = findViewById(R.id.btn_register)
+
+        //Configuracion de SetUP
         setUp();
+
+        //Lectura de ViewModel
+        viewModel.respuesta.observe(this, Observer { respuesta ->
+            respuesta?.let {
+
+            } ?: run {
+                showAlert()
+            }
+        })
+
     }
 
     private fun setUp(){
@@ -62,7 +81,8 @@ class registroUser : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(),etConfirmPassword.text.toString())
                     .addOnCompleteListener {
                         if (it.isSuccessful){
-                            showHome(it.result?.user?.email ?: "",etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
+                            email = it.result?.user?.email ?: ""
+                            showHome(email,etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
                         }else{
                             showAlert()
                         }
@@ -101,9 +121,11 @@ class registroUser : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email:String,nombre: String, apellido: String, provider: ProviderType){
+    private fun showHome(email:String?,nombre: String, apellido: String, provider: ProviderType){
         val uid = auth.currentUser?.uid
         val usuario = Usuario(uid ,nombre,apellido,email,"");
+
+        viewModel.crearUsuario(nombre,apellido,auth.currentUser?.uid.toString())
 
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
             putExtra("usuario",usuario)

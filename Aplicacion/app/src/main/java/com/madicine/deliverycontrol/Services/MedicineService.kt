@@ -1,6 +1,5 @@
 package com.madicine.deliverycontrol.Services
 
-import com.madicine.deliverycontrol.R
 import org.json.JSONObject
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
@@ -8,10 +7,11 @@ import java.net.URL
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-object medicineService {
+object MedicineService {
 
     fun getMedicamentoByCodigo(codigo:String,uid:String): String? {
-        val url = URL(R.string.Url.toString()+"medicamentos/leerCodigoBarras")
+        val endpoint = "https://apimdcs-production.up.railway.app/api/medicamentos/leerCodigoBarras"
+        val url = URL(endpoint)
         val connection = url.openConnection() as HttpURLConnection
 
         //Fecha de consulta
