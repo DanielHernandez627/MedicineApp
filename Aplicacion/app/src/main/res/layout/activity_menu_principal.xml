@@ -68,7 +68,7 @@
         android:layout_marginTop="40dp"
         android:text="@string/tlUsuario"
         android:textColor="@color/textMPrincipal"
-        android:textSize="15sp"
+        android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
         app:layout_constraintHorizontal_bias="0.429"

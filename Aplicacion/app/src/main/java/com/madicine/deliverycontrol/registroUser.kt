@@ -63,30 +63,24 @@ class registroUser : AppCompatActivity() {
 
         //Configuracion de SetUP
         setUp();
-
-        //Lectura de ViewModel
-        viewModel.respuesta.observe(this, Observer { respuesta ->
-            respuesta?.let {
-
-            } ?: run {
-                showAlert()
-            }
-        })
-
     }
 
     private fun setUp(){
         btnRegister.setOnClickListener{
             if (validateInput()){
-                auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(),etConfirmPassword.text.toString())
-                    .addOnCompleteListener {
-                        if (it.isSuccessful){
-                            email = it.result?.user?.email ?: ""
-                            showHome(email,etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
-                        }else{
-                            showAlert()
+                if (!emailVerification(etEmail.text.toString())){
+                    auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(),etConfirmPassword.text.toString())
+                        .addOnCompleteListener {
+                            if (it.isSuccessful){
+                                email = it.result?.user?.email ?: ""
+                                showHome(email,etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
+                            }else{
+                                showAlert()
+                            }
                         }
-                    }
+                }else{
+                    showAlertEmail()
+                }
             }
         }
     }
@@ -134,5 +128,24 @@ class registroUser : AppCompatActivity() {
         menuIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(menuIntent)
         finish()
+    }
+
+    private fun emailVerification(email: String?): Boolean {
+        val emailVerify = auth.currentUser?.email.equals(email)
+        var response = false
+        if (emailVerify){
+            response = true
+        }
+
+        return response
+    }
+
+    private fun showAlertEmail(){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Error")
+        builder.setMessage("El correo digitado ya existe")
+        builder.setPositiveButton("Aceptar",null)
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 }
