@@ -55,4 +55,29 @@ object UserService {
         }
     }
 
+    fun searchUser(uuid: String): String? {
+        val endpoint = "https://apimdcs-production.up.railway.app/api/usuarios/$uuid"
+        val url = URL(endpoint)
+        val connection = url.openConnection() as HttpURLConnection
+
+        return try {
+            // Configura la conexión para GET
+            connection.requestMethod = "GET"
+            // Comprueba si la respuesta es exitosa
+            if (connection.responseCode == HttpURLConnection.HTTP_OK) {
+                // Lee la respuesta
+                connection.inputStream.bufferedReader().use {
+                   reader -> reader.readText()
+                }
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }finally {
+            connection.disconnect()
+        }
+    }
+
 }

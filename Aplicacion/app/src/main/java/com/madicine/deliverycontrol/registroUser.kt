@@ -17,6 +17,8 @@ import androidx.lifecycle.Observer
 import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
+import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.auth
 import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
@@ -68,19 +70,19 @@ class registroUser : AppCompatActivity() {
     private fun setUp(){
         btnRegister.setOnClickListener{
             if (validateInput()){
-                if (!emailVerification(etEmail.text.toString())){
-                    auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(),etConfirmPassword.text.toString())
-                        .addOnCompleteListener {
-                            if (it.isSuccessful){
-                                email = it.result?.user?.email ?: ""
-                                showHome(email,etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
+                auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(),etConfirmPassword.text.toString())
+                    .addOnCompleteListener {
+                        if (it.isSuccessful){
+                            email = it.result?.user?.email ?: ""
+                            showHome(email,etNombre.text.toString(),etApellido.text.toString(),ProviderType.BASIC)
+                        }else{
+                            if (it.exception is FirebaseAuthUserCollisionException){
+                                showAlertEmail()
                             }else{
                                 showAlert()
                             }
                         }
-                }else{
-                    showAlertEmail()
-                }
+                    }
             }
         }
     }
@@ -130,20 +132,10 @@ class registroUser : AppCompatActivity() {
         finish()
     }
 
-    private fun emailVerification(email: String?): Boolean {
-        val emailVerify = auth.currentUser?.email.equals(email)
-        var response = false
-        if (emailVerify){
-            response = true
-        }
-
-        return response
-    }
-
     private fun showAlertEmail(){
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Error")
-        builder.setMessage("El correo digitado ya existe")
+        builder.setMessage("El correo digitado ya se encuentra en uso")
         builder.setPositiveButton("Aceptar",null)
         val dialog: AlertDialog = builder.create()
         dialog.show()

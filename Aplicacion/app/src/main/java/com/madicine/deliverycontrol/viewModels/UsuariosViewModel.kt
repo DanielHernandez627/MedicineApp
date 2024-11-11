@@ -24,5 +24,13 @@ class UsuariosViewModel : ViewModel() {
         }
     }
 
-
+    //Funcion para la busqueda de usuario
+    fun buscarUsuario(uuid: String) {
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                repository.searchUser(uuid)
+            }
+            _respuesta.value = result
+        }
+    }
 }

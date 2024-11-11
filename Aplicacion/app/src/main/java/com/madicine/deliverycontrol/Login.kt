@@ -6,10 +6,12 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.Observer
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.Firebase
@@ -17,6 +19,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.madicine.deliverycontrol.Entities.Usuario
+import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
 
 class Login : AppCompatActivity() {
 
@@ -27,6 +30,9 @@ class Login : AppCompatActivity() {
     private lateinit var btn_register_redirect: Button
     private lateinit var imgBGoogle: Button
     private val GOOGLE_SIGN_IN = 100
+
+    //Declaracion de variable ViewModel
+    private val viewModel: UsuariosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,13 +47,24 @@ class Login : AppCompatActivity() {
             insets
         }
 
+        //Inicializacion de objetos graficos
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion)
         txt_email = findViewById(R.id.txt_email)
         txt_pass = findViewById(R.id.txt_pass)
         btn_register_redirect = findViewById(R.id.btn_register_redirect)
         imgBGoogle = findViewById(R.id.imgBGoogle)
 
+        //Configuracion de inicio
         setUp()
+
+        //Lectura de ViewModel
+        viewModel.respuesta.observe(this, Observer { respuesta ->
+            respuesta?.let {
+                 println(it)
+            } ?: run {
+                println("Error al obtener la respuesta")
+            }
+        })
     }
 
     private fun setUp(){
@@ -57,7 +74,7 @@ class Login : AppCompatActivity() {
                 val pass = txt_pass.text.toString()
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
                     if(it.isSuccessful){
-                        showHome(it.result?.user?.email ?: "","Hola","Mundo",it.result?.user?.uid ?: "",ProviderType.BASIC)
+                        showHome(it.result?.user?.email ?: "",it.result?.user?.uid ?: "",ProviderType.BASIC)
                     }else{
                         showAlert()
                     }
@@ -91,8 +108,9 @@ class Login : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email:String,nombre: String, apellido: String,uid: String?, provider: ProviderType){
-        val usuario = Usuario(uid ,nombre,apellido,email,"");
+    private fun showHome(email:String,uid: String?, provider: ProviderType){
+
+        val usuario = Usuario(uid ,"nombre","apellido",email,"");
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
             putExtra("usuario",usuario)
             putExtra("provider",provider.name)
