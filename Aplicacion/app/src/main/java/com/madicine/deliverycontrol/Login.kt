@@ -2,6 +2,7 @@ package com.madicine.deliverycontrol
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -30,6 +31,7 @@ class Login : AppCompatActivity() {
     private lateinit var btn_register_redirect: Button
     private lateinit var imgBGoogle: Button
     private val GOOGLE_SIGN_IN = 100
+    private var emailGlobal : String? = null
 
     //Declaracion de variable ViewModel
     private val viewModel: UsuariosViewModel by viewModels()
@@ -58,9 +60,11 @@ class Login : AppCompatActivity() {
         setUp()
 
         //Lectura de ViewModel
-        viewModel.respuesta.observe(this, Observer { respuesta ->
-            respuesta?.let {
-                 println(it)
+        viewModel.usuario.observe(this, Observer { usuario ->
+            usuario?.let {
+                usuario.let {
+                    showHome(emailGlobal ?: "",it.nombre,it.apellido,it.udi)
+                }
             } ?: run {
                 println("Error al obtener la respuesta")
             }
@@ -74,7 +78,8 @@ class Login : AppCompatActivity() {
                 val pass = txt_pass.text.toString()
                 auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
                     if(it.isSuccessful){
-                        showHome(it.result?.user?.email ?: "",it.result?.user?.uid ?: "",ProviderType.BASIC)
+                        emailGlobal = it.result?.user?.email ?: ""
+                        viewModel.buscarUsuario(it.result?.user?.uid ?: "")
                     }else{
                         showAlert()
                     }
@@ -108,9 +113,9 @@ class Login : AppCompatActivity() {
         dialog.show()
     }
 
-    private fun showHome(email:String,uid: String?, provider: ProviderType){
-
-        val usuario = Usuario(uid ,"nombre","apellido",email,"");
+    private fun showHome(email:String,nombre: String?, apellido: String?,uid: String?){
+        val provider = ProviderType.BASIC
+        val usuario = Usuario(uid , nombre ?: "",apellido ?: "",email,"");
         val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
             putExtra("usuario",usuario)
             putExtra("provider",provider.name)
