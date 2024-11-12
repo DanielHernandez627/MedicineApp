@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.madicine.deliverycontrol"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.madicine.deliverycontrol"
@@ -61,4 +61,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //Dependencia ViewModel
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
 }

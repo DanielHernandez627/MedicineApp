@@ -16,7 +16,7 @@
     <string name="hint_confirm_email">Confirmar Correo Electrónico</string>
     <string name="hint_password">Contraseña</string>
     <string name="hint_nombre">Digite su Nombre</string>
-    <string name="hint_apellido">Digite su Apellido"></string>
+    <string name="hint_apellido">Digite su Apellido</string>
     <string name="hint_confirm_password">Confirmar Contraseña</string>
     <string name="warning_email_not_match">Los correos no coinciden</string>
     <string name="warning_password_not_match">Las contraseñas no coinciden</string>
@@ -25,6 +25,7 @@
     <!--Menu Principal -->
     <string name="tlPrincipalMenu">Inicio</string>
     <string name="tlUsuario">Texto</string>
+    <string name="alertLogOut">¿Desea cerrar sesión?</string>
     <!--Menu Principal -->
 
     <!--Nombre SharedPreferences -->
@@ -36,4 +37,8 @@
     <string name="card_medicine">Busqueda de \n Medicamento</string>
     <string name="card_history">Historial de \n Busqueda</string>
     <!--Texto Cards Menu Principal -->
+
+    <!--Cadena para consumo de APIs -->
+    <string name="Url">https://apimdcs-production.up.railway.app/api/medicamentos/leerCodigoBarras</string>
+    <!--Cadena para consumo de APIs -->
 </resources>
