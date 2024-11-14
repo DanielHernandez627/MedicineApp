@@ -3,6 +3,7 @@ package com.madicine.deliverycontrol
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
@@ -16,6 +17,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
 import com.google.firebase.auth.FirebaseAuth
+import com.madicine.deliverycontrol.Entities.Medicamentos
 import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.Interfaces.PermissionHandler
 import com.madicine.deliverycontrol.Utilities.PermissionsUtils
@@ -28,12 +30,14 @@ class MenuPrincipal : AppCompatActivity() {
     private lateinit var permissionHandler: PermissionHandler
     private lateinit var tl_usuario: TextView
     private lateinit var tl_fecha: TextView
-    private lateinit var tlDatos: TextView
     private lateinit var btnConsulta: Button
     private lateinit var btnILogOut: ImageButton
+    private lateinit var btnMedicamentos: Button
+    private lateinit var btnHistorial: Button
     private lateinit var barcodeScannerLauncher: ActivityResultLauncher<Intent>
     private var usuario: Usuario? = null
     private var scannedCode : String? = null
+    private var uid : String? = null
 
     //Declaracion de variable ViewModel
     private val viewModel: MedicamentosViewModel by viewModels()
@@ -58,21 +62,22 @@ class MenuPrincipal : AppCompatActivity() {
 
         tl_usuario = findViewById(R.id.tlUsuario);
         tl_fecha = findViewById(R.id.tlFecha)
-        tlDatos = findViewById(R.id.tlDatos)
         btnILogOut = findViewById(R.id.imgLogOut)
         btnConsulta = findViewById(R.id.btnConsulta)
+        btnMedicamentos = findViewById(R.id.btnMedicamentos)
+        btnHistorial = findViewById(R.id.btnHistorial)
 
         val bundle = intent.extras
         //Recuperar datos del usuario
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
-            usuario = bundle?.getSerializable("usuario", Usuario::class.java)
+        usuario = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            bundle?.getSerializable("usuario", Usuario::class.java)
         }else{
-            usuario = bundle?.getSerializable("usuario") as? Usuario
+            bundle?.getSerializable("usuario") as? Usuario
         }
 
         val nombre = usuario?.nombre + " " + usuario?.apellido
         val email = usuario?.email
-        val uid = usuario?.udi
+        uid = usuario?.udi
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val currentDate = sdf.format(System.currentTimeMillis())
 
@@ -103,11 +108,14 @@ class MenuPrincipal : AppCompatActivity() {
         }
 
         //Lectura de ViewModel
-        viewModel.respuesta.observe(this, Observer { respuesta ->
+        viewModel.medicamento.observe(this, Observer { respuesta ->
             respuesta?.let {
-                tlDatos.text = it
+                respuesta.let {
+                    val medicamento = Medicamentos(it.nombre,it.concentracion,it.codigo,it.idMedicamento,it.idLaboratorio,it.tipoMedicamento,it.contraIndicacion,it.nombreLaboratorio)
+                    showMedicine(medicamento)
+                }
             } ?: run {
-                tlDatos.text = "Error al obtener la respuesta"
+                Log.d("MenuPrincipal","Error al obtener la respuesta")
             }
         })
 
@@ -126,6 +134,17 @@ class MenuPrincipal : AppCompatActivity() {
 
         btnILogOut.setOnClickListener {
             logOut()
+        }
+
+        btnMedicamentos.setOnClickListener {
+            viewModel.enviarCodigoBarras("12345678",uid.toString())
+        }
+
+        btnHistorial.setOnClickListener {
+            val intent = Intent(this, Historic::class.java).apply {
+                putExtra("uuid", uid)
+            }
+            startActivity(intent)
         }
     }
 
@@ -158,5 +177,15 @@ class MenuPrincipal : AppCompatActivity() {
 
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    /**
+     * Metodo para ir la pantalla de muestra de medicamento
+     * */
+    private fun showMedicine(medicamentos: Medicamentos){
+        val intent = Intent(this, ViewMedicine::class.java).apply{
+            putExtra("Medicamento",medicamentos)
+        }
+        startActivity(intent)
     }
 }

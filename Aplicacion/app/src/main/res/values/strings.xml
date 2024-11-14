@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">deliverycontrol</string>
+    <string name="app_name">Mdcs</string>
     <string name="tlPrincipal">Bienvenidos, MDCS</string>
     <string name="tlSegundario">Medicine Delivery Control System.</string>
     <string name="btnPrincipal">Iniciar</string>
@@ -38,7 +38,11 @@
     <string name="card_history">Historial de \n Busqueda</string>
     <!--Texto Cards Menu Principal -->
 
-    <!--Cadena para consumo de APIs -->
-    <string name="Url">https://apimdcs-production.up.railway.app/api/medicamentos/leerCodigoBarras</string>
-    <!--Cadena para consumo de APIs -->
+    <!--Consulta Medicamentos -->
+    <string name="tlPrincipalMedicamentos">Tu Medicamento</string>
+    <!--Consulta Medicamentos -->
+
+    <!--Historial -->
+    <string name="tlPrincipalHistorial">Tu Historial</string>
+    <!--Historial -->
 </resources>

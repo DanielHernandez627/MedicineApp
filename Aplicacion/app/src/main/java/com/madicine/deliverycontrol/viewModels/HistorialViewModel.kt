@@ -39,7 +39,7 @@ class HistorialViewModel : ViewModel() {
 
                     val medicamento = MedicamentosConsulta(
                         idMedicamento = medicamentoObject.getInt("Id_Medicamento"),
-                        nombreMedicamento = medicamentoObject.getString("NombreUsuario"),
+                        nombreMedicamento = medicamentoObject.getString("NombreMedicamento"),
                         fechaConsulta = medicamentoObject.getString("FechaConsulta")
                     )
 
