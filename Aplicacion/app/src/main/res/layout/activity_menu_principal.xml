@@ -72,7 +72,7 @@
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
-        app:layout_constraintHorizontal_bias="0.521"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
         app:layout_constraintTop_toTopOf="@+id/imgFondo" />
 

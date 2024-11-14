@@ -33,6 +33,7 @@ class MenuPrincipal : AppCompatActivity() {
     private lateinit var btnConsulta: Button
     private lateinit var btnILogOut: ImageButton
     private lateinit var btnMedicamentos: Button
+    private lateinit var btnHistorial: Button
     private lateinit var barcodeScannerLauncher: ActivityResultLauncher<Intent>
     private var usuario: Usuario? = null
     private var scannedCode : String? = null
@@ -64,6 +65,7 @@ class MenuPrincipal : AppCompatActivity() {
         btnILogOut = findViewById(R.id.imgLogOut)
         btnConsulta = findViewById(R.id.btnConsulta)
         btnMedicamentos = findViewById(R.id.btnMedicamentos)
+        btnHistorial = findViewById(R.id.btnHistorial)
 
         val bundle = intent.extras
         //Recuperar datos del usuario
@@ -135,7 +137,14 @@ class MenuPrincipal : AppCompatActivity() {
         }
 
         btnMedicamentos.setOnClickListener {
-            viewModel.enviarCodigoBarras("******",uid.toString())
+            viewModel.enviarCodigoBarras("12345678",uid.toString())
+        }
+
+        btnHistorial.setOnClickListener {
+            val intent = Intent(this, Historic::class.java).apply {
+                putExtra("uuid", uid)
+            }
+            startActivity(intent)
         }
     }
 
@@ -174,7 +183,6 @@ class MenuPrincipal : AppCompatActivity() {
      * Metodo para ir la pantalla de muestra de medicamento
      * */
     private fun showMedicine(medicamentos: Medicamentos){
-
         val intent = Intent(this, ViewMedicine::class.java).apply{
             putExtra("Medicamento",medicamentos)
         }

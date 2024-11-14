@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">deliverycontrol</string>
+    <string name="app_name">Mdcs</string>
     <string name="tlPrincipal">Bienvenidos, MDCS</string>
     <string name="tlSegundario">Medicine Delivery Control System.</string>
     <string name="btnPrincipal">Iniciar</string>
@@ -41,4 +41,8 @@
     <!--Consulta Medicamentos -->
     <string name="tlPrincipalMedicamentos">Tu Medicamento</string>
     <!--Consulta Medicamentos -->
+
+    <!--Historial -->
+    <string name="tlPrincipalHistorial">Tu Historial</string>
+    <!--Historial -->
 </resources>

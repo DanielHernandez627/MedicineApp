@@ -23,7 +23,7 @@ object HistoryService {
             // Crea el objeto JSON con los datos
             val jsonObject = JSONObject()
             jsonObject.put("U_Uid", uuid)
-            jsonObject.put("top",5)
+            jsonObject.put("top",10)
 
             // Escribe el JSON en el OutputStream
             OutputStreamWriter(connection.outputStream).use { writer ->
