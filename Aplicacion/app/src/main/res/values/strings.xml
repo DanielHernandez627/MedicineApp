@@ -38,7 +38,7 @@
     <string name="card_history">Historial de \n Busqueda</string>
     <!--Texto Cards Menu Principal -->
 
-    <!--Cadena para consumo de APIs -->
-    <string name="Url">https://apimdcs-production.up.railway.app/api/medicamentos/leerCodigoBarras</string>
-    <!--Cadena para consumo de APIs -->
+    <!--Consulta Medicamentos -->
+    <string name="tlPrincipalMedicamentos">Tu Medicamento</string>
+    <!--Consulta Medicamentos -->
 </resources>

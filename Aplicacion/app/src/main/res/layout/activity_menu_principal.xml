@@ -15,6 +15,7 @@
         android:layout_marginTop="36dp"
         android:text="@string/tlPrincipalMenu"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -65,13 +66,13 @@
         android:id="@+id/tlUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="52dp"
         android:text="@string/tlUsuario"
         android:textColor="@color/textMPrincipal"
         android:textSize="13sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
-        app:layout_constraintHorizontal_bias="0.429"
+        app:layout_constraintHorizontal_bias="0.521"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
         app:layout_constraintTop_toTopOf="@+id/imgFondo" />
 
@@ -84,7 +85,7 @@
         android:textColor="@color/textMPrincipal"
         android:textSize="13sp"
         app:layout_constraintEnd_toStartOf="@+id/imgUser"
-        app:layout_constraintHorizontal_bias="0.38"
+        app:layout_constraintHorizontal_bias="0.296"
         app:layout_constraintStart_toStartOf="@+id/imgFondo"
         app:layout_constraintTop_toBottomOf="@+id/tlUsuario" />
 
@@ -141,16 +142,6 @@
         android:textSize="13sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnConsulta" />
-
-    <TextView
-        android:id="@+id/tlDatos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="60dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/btnHistorial"
-        app:layout_constraintTop_toBottomOf="@+id/btnMedicamentos" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

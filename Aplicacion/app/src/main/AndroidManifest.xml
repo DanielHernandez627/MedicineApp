@@ -20,6 +20,9 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".ViewMedicine"
+            android:exported="false" />
+        <activity
             android:name=".BarcodeScanner"
             android:exported="false" />
         <activity

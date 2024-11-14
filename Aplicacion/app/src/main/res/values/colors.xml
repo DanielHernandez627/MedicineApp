@@ -7,4 +7,6 @@
     <color name="cardblue">#0D3B66</color>
     <color name="btnBlue">#043B5C</color>
     <color name="textMPrincipal">#043B5C</color>
+    <color name="principalBeige">#F5F7DC</color>
+    <color name="boderGray">#F0F0E8</color>
 </resources>

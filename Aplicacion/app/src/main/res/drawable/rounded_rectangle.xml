@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- Color de fondo del rectángulo -->
-    <solid android:color="@color/principalBlue" /> <!-- Cambia este color por el que desees -->
+    <solid android:color="@color/principalBlue" />
 
     <!-- Esquinas redondeadas solo en la parte superior -->
     <corners
