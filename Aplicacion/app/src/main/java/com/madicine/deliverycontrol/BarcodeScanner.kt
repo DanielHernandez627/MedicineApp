@@ -16,8 +16,9 @@ import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.common.util.concurrent.ListenableFuture
+import com.google.mlkit.vision.barcode.BarcodeScannerOptions
 import com.google.mlkit.vision.barcode.BarcodeScanning
+import com.google.mlkit.vision.barcode.common.Barcode
 import com.google.mlkit.vision.common.InputImage
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -80,7 +81,15 @@ class BarcodeScanner : AppCompatActivity() {
     }
 
     private class BarcodeAnalyzer(private val onBarcodeDetected: (String) -> Unit) : ImageAnalysis.Analyzer {
-        private val scanner = BarcodeScanning.getClient()
+        private val scanner = BarcodeScanning.getClient(
+            BarcodeScannerOptions.Builder()
+                .setBarcodeFormats(
+                    Barcode.FORMAT_QR_CODE,     // Soporte para QR Codes
+                    Barcode.FORMAT_CODE_128,   // Ejemplo de código de barras
+                    Barcode.FORMAT_EAN_13      // Otro formato de código de barras
+                )
+                .build()
+        )
 
         @ExperimentalGetImage
         override fun analyze(imageProxy: ImageProxy) {
@@ -92,15 +101,15 @@ class BarcodeScanner : AppCompatActivity() {
                 scanner.process(inputImage)
                     .addOnSuccessListener { barcodes ->
                         if (barcodes.isNotEmpty()) {
-                            Log.d("BarcodeAnalyzer", "Códigos de barras detectados: ${barcodes.size}")
+                            Log.d("BarcodeAnalyzer", "Códigos detectados: ${barcodes.size}")
                             for (barcode in barcodes) {
-                                val barcodeValue = barcode.rawValue ?: ""
-                                Log.d("BarcodeAnalyzer", "Código de barras detectado: $barcodeValue")
-                                onBarcodeDetected(barcodeValue)
-                                break // Detener después de encontrar el primer código de barras
+                                val codeValue = barcode.rawValue ?: ""
+                                Log.d("BarcodeAnalyzer", "Código detectado: $codeValue")
+                                onBarcodeDetected(codeValue)
+                                break // Detener después de encontrar el primer código
                             }
                         } else {
-                            Log.d("BarcodeAnalyzer", "No se detectaron códigos de barras en la imagen.")
+                            Log.d("BarcodeAnalyzer", "No se detectaron códigos en la imagen.")
                         }
                     }
                     .addOnFailureListener { exception ->
