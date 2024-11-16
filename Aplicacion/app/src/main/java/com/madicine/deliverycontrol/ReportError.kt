@@ -154,8 +154,8 @@ class ReportError : AppCompatActivity() {
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("OK") { dialog, _ ->
-                showMenuPrincipal()
                 dialog.dismiss()
+                showMenuPrincipal()
             }
             .create()
 
@@ -164,9 +164,8 @@ class ReportError : AppCompatActivity() {
 
 
     private fun showMenuPrincipal(){
-        val intent = Intent(this, MenuPrincipal::class.java)
-        finish()
-        startActivity(intent)
+        edtDescription.text.clear()
+        imgPreview.setImageResource(android.R.color.transparent)
     }
 
     private fun cleanBase64String(base64String: String): String {
