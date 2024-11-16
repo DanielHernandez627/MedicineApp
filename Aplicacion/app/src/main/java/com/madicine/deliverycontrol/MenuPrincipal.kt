@@ -84,11 +84,19 @@ class MenuPrincipal : AppCompatActivity() {
         /**
          * Proceso de guardado de datos en shared preferences
          * */
-        val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE).edit()
-        prefs.putString("email", email)
-        prefs.putString("uid",uid)
-        prefs.putString("nombre",nombre)
-        prefs.apply()
+        val sharedPreferences = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)
+        val prefsEditor = sharedPreferences.edit()
+
+        if (!sharedPreferences.contains("email")) {
+            prefsEditor.putString("email", email)
+        }
+        if (!sharedPreferences.contains("uid")) {
+            prefsEditor.putString("uid", uid)
+        }
+        if (!sharedPreferences.contains("nombre")) {
+            prefsEditor.putString("nombre", nombre)
+        }
+        prefsEditor.apply()
 
 
         //Datos de usuario
@@ -137,7 +145,10 @@ class MenuPrincipal : AppCompatActivity() {
         }
 
         btnMedicamentos.setOnClickListener {
-            viewModel.enviarCodigoBarras("12345678",uid.toString())
+            val intent = Intent(this, ReportError::class.java).apply {
+                putExtra("uuid", uid)
+            }
+            startActivity(intent)
         }
 
         btnHistorial.setOnClickListener {
@@ -147,6 +158,28 @@ class MenuPrincipal : AppCompatActivity() {
             startActivity(intent)
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Leer datos de SharedPreferences
+        val prefs = getSharedPreferences(getString(R.string.prefs_file), MODE_PRIVATE)
+
+        val nombre = prefs.getString("nombre", "") // Si no existe, retorna un valor vacío
+        val email = prefs.getString("email", "")
+        uid = prefs.getString("uid", "")
+
+
+        val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val currentDate = sdf.format(System.currentTimeMillis())
+
+
+        //Datos de usuario
+        tl_usuario.text = nombre
+        tl_fecha.text = currentDate
+
+    }
+
 
     /**
      * Metodo para cerrar sesión

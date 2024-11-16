@@ -47,8 +47,12 @@ class MainActivity : AppCompatActivity() {
 
         btnPrincipal = findViewById(R.id.btnPrincipal)
 
-        if (!permissionHandler.verifyCameraPermission(this)){
-            permissionHandler.requestCameraPermission(this);
+        if (!permissionHandler.verifyCameraPermission(this)) {
+            permissionHandler.requestCameraPermission(this)
+        }
+
+        if (!permissionHandler.verifyStoragePermissions(this)) {
+            permissionHandler.requestStoragePermissions(this)
         }
 
         setUp()

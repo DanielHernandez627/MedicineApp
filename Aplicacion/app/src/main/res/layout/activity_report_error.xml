@@ -1,0 +1,89 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/main"
+    android:padding="16dp"
+    android:background="@android:color/white"
+    tools:context=".ReportError">
+
+    <!-- Título de la actividad -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:text="@string/tlPrincipalError"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Campo de texto para descripción -->
+    <EditText
+        android:id="@+id/edtDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/rounded_edittext"
+        android:gravity="top"
+        android:hint="@string/hitn_description"
+        android:inputType="textMultiLine"
+        android:minHeight="100dp"
+        android:padding="8dp"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+    <!-- Botón para tomar foto -->
+    <Button
+        android:id="@+id/btnFoto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/shape_button_iniciar"
+        android:text="@string/btnFoto"
+        android:textColor="@android:color/black"
+        app:layout_constraintEnd_toStartOf="@+id/btnEnviarReporte"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edtDescription" />
+
+    <!-- Botón para enviar reporte -->
+    <Button
+        android:id="@+id/btnEnviarReporte"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/shape_button_blue"
+        android:text="@string/btnEnviarReporte"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnFoto"
+        app:layout_constraintTop_toBottomOf="@+id/edtDescription" />
+
+    <!-- Vista previa de la imagen -->
+    <ImageView
+        android:id="@+id/imgPreview"
+        android:layout_width="0dp"
+        android:layout_height="390dp"
+        android:layout_marginTop="26dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnFoto" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
