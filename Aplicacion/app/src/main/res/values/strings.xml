@@ -8,6 +8,7 @@
     <string name="tlEmail">Correo Electronico</string>
     <string name="tlPass">Contraseña</string>
     <string name="btnIniciarSesion">Inicio de Sesion</string>
+    <string name="tlRegistro">¿No tienes una cuenta? Regístrate</string>
 
     <!--Registro -->
     <string name="register_title">Registro de Usuario</string>
@@ -26,6 +27,7 @@
     <string name="tlPrincipalMenu">Inicio</string>
     <string name="tlUsuario">Texto</string>
     <string name="alertLogOut">¿Desea cerrar sesión?</string>
+    <string name="logout_description">Cerrar sesión</string>
     <!--Menu Principal -->
 
     <!--Nombre SharedPreferences -->
@@ -34,7 +36,7 @@
 
     <!--Texto Cards Menu Principal -->
     <string name="card_scan">Escaneo de \n Medicamento</string>
-    <string name="card_medicine">Busqueda de \n Medicamento</string>
+    <string name="card_medicine">Error de \n Medicamento</string>
     <string name="card_history">Historial de \n Busqueda</string>
     <!--Texto Cards Menu Principal -->
 
@@ -44,5 +46,16 @@
 
     <!--Historial -->
     <string name="tlPrincipalHistorial">Tu Historial</string>
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
     <!--Historial -->
+
+    <!--Reporte de Error -->
+    <string name="tlPrincipalError">Reporte de Error en Medicamento</string>
+    <string name="hitn_description">Describe el error</string>
+    <string name="btnFoto">Tomar Foto</string>
+    <string name="btnEnviarReporte">Enviar Reporte</string>
+    <!--Reporte de Error-->
 </resources>
