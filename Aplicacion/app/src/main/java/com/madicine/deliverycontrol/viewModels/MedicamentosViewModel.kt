@@ -39,6 +39,8 @@ class MedicamentosViewModel : ViewModel() {
                 )
 
                 _medicamento.postValue(medicamento)
+            } ?: run {
+                _medicamento.postValue(null)
             }
         }
     }

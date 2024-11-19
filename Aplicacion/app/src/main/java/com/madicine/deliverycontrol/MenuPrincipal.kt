@@ -1,5 +1,6 @@
 package com.madicine.deliverycontrol
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -7,6 +8,8 @@ import android.util.Log
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -123,9 +126,19 @@ class MenuPrincipal : AppCompatActivity() {
                     showMedicine(medicamento)
                 }
             } ?: run {
+                showAlertOk(this)
                 Log.d("MenuPrincipal","Error al obtener la respuesta")
             }
         })
+
+        //Verificacion de evento boton atras interface
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                logOut()
+            }
+        }
+
+        onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
 
         //Configuración
         setup()
@@ -159,6 +172,9 @@ class MenuPrincipal : AppCompatActivity() {
         }
     }
 
+    /**
+     * Metodo de lectura del sharedPreferenses al volver a la pantalla
+     * */
     override fun onResume() {
         super.onResume()
 
@@ -177,7 +193,6 @@ class MenuPrincipal : AppCompatActivity() {
         //Datos de usuario
         tl_usuario.text = nombre
         tl_fecha.text = currentDate
-
     }
 
 
@@ -198,7 +213,7 @@ class MenuPrincipal : AppCompatActivity() {
 
             //Cerrar sesión de firebase
             FirebaseAuth.getInstance().signOut()
-            onBackPressed()
+            finish()
 
             dialog.dismiss()
         }
@@ -221,4 +236,20 @@ class MenuPrincipal : AppCompatActivity() {
         }
         startActivity(intent)
     }
+
+    /**
+     * Mensaje de error en caso de no encontrar el medicamento
+     * */
+    private fun showAlertOk(context: Context) {
+        val alertDialog = android.app.AlertDialog.Builder(context)
+            .setTitle("Error")
+            .setMessage("Codigo de barras o QR no reconocido")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        alertDialog.show()
+    }
+
 }

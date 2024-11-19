@@ -54,6 +54,8 @@ class HistorialViewModel : ViewModel() {
 
                 _historial.postValue(historial)
 
+            }?: run {
+                _historial.postValue(null)
             }
         }
     }

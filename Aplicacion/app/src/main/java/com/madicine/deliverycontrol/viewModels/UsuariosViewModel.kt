@@ -45,6 +45,8 @@ class UsuariosViewModel : ViewModel() {
                 )
 
                 _usuario.postValue(usuario)
+            }?: run {
+                _usuario.postValue(null)
             }
         }
     }

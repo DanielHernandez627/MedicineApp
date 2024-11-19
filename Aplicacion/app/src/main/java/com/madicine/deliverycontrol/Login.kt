@@ -71,6 +71,13 @@ class Login : AppCompatActivity() {
         })
     }
 
+    //Limpieza de campos email y password en caso de reiniciar la activity
+    override fun onResume() {
+        super.onResume()
+        txt_email.text = null
+        txt_pass.text = null
+    }
+
     private fun setUp(){
         btnIniciarSesion.setOnClickListener{
             if (txt_email.text.isNotEmpty() && txt_pass.text.isNotEmpty()){
@@ -113,6 +120,9 @@ class Login : AppCompatActivity() {
         dialog.show()
     }
 
+    /**
+     * Funcion de paso a la pantalla de menu principal
+     * */
     private fun showHome(email:String,nombre: String?, apellido: String?,uid: String?){
         val provider = ProviderType.BASIC
         val usuario = Usuario(uid , nombre ?: "",apellido ?: "",email,"");
