@@ -1,155 +1,182 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:background="@android:color/white"
     tools:context=".registroUser">
 
-    <!-- Título Registro -->
-    <TextView
-        android:id="@+id/tv_register"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="75dp"
-        android:text="@string/register_title"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:paddingBottom="20dp">
 
-    <!-- Campo para ingresar correo -->
-    <EditText
-        android:id="@+id/et_email"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hint_email"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_register" />
+        <!-- Título Registro -->
+        <TextView
+            android:id="@+id/tv_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="75dp"
+            android:text="@string/register_title"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Campo para confirmar correo -->
-    <EditText
-        android:id="@+id/et_confirm_email"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hint_confirm_email"
-        android:inputType="textEmailAddress"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        <!-- Campo para ingresar correo -->
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="290dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hint_email"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_register" />
 
-    <!-- Texto de advertencia para correos no coincidentes -->
+        <!-- Campo para confirmar correo -->
+        <EditText
+            android:id="@+id/et_confirm_email"
+            android:layout_width="290dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hint_confirm_email"
+            android:inputType="textEmailAddress"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_email" />
 
-    <TextView
-        android:id="@+id/tv_email_warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        android:text="@string/warning_email_not_match"
-        android:textColor="@android:color/holo_red_dark"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_email" />
+        <!-- Texto de advertencia para correos no coincidentes -->
+        <TextView
+            android:id="@+id/tv_email_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            android:text="@string/warning_email_not_match"
+            android:textColor="@android:color/holo_red_dark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_confirm_email" />
 
-    <EditText
-        android:id="@+id/et_nombre"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hint_nombre"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_email" />
+        <TextView
+            android:id="@+id/tv_email_format_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="El correo no tiene un formato válido"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_email_warning" />
 
-    <EditText
-        android:id="@+id/et_apellido"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hint_apellido"
-        android:inputType="text"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_nombre" />
+        <EditText
+            android:id="@+id/et_nombre"
+            android:layout_width="290dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hint_nombre"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_confirm_email" />
 
-    <EditText
-        android:id="@+id/et_password"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hint_password"
-        android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_apellido" />
+        <EditText
+            android:id="@+id/et_apellido"
+            android:layout_width="290dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hint_apellido"
+            android:inputType="text"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_nombre" />
 
-    <EditText
-        android:id="@+id/et_confirm_password"
-        android:layout_width="290dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="28dp"
-        android:background="@drawable/rounded_edittext"
-        android:hint="@string/hint_confirm_password"
-        android:inputType="textPassword"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_password" />
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="290dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hint_password"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_apellido" />
 
-    <!-- Texto de advertencia para contraseñas no coincidentes -->
+        <EditText
+            android:id="@+id/et_confirm_password"
+            android:layout_width="290dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="28dp"
+            android:background="@drawable/rounded_edittext"
+            android:hint="@string/hint_confirm_password"
+            android:inputType="textPassword"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_password" />
 
-    <!-- Botón de registro -->
+        <!-- Texto de advertencia para contraseñas no coincidentes -->
+        <TextView
+            android:id="@+id/tv_password_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/warning_password_not_match"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/et_confirm_password" />
 
-    <TextView
-        android:id="@+id/tv_password_warning"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/warning_password_not_match"
-        android:textColor="@android:color/holo_red_dark"
-        android:layout_marginTop="4dp"
-        android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
+        <TextView
+            android:id="@+id/tv_password_length_warning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="La contraseña debe tener al menos 6 caracteres"
+            android:textColor="@android:color/holo_red_dark"
+            android:layout_marginTop="4dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_password_warning" />
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
-        android:background="@drawable/shape_button_blue"
-        android:text="@string/btn_register"
-        android:textColor="@color/white"
-        android:textSize="23sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_confirm_password" />
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="52dp"
+            android:background="@drawable/shape_button_blue"
+            android:text="@string/btn_register"
+            android:textColor="@color/white"
+            android:textSize="23sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_password_length_warning" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

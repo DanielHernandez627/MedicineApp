@@ -79,15 +79,25 @@ class Login : AppCompatActivity() {
     }
 
     private fun setUp(){
-        btnIniciarSesion.setOnClickListener{
-            if (txt_email.text.isNotEmpty() && txt_pass.text.isNotEmpty()){
+        btnIniciarSesion.setOnClickListener {
+            if (txt_email.text.isNotEmpty() && txt_pass.text.isNotEmpty()) {
                 val email = txt_email.text.toString()
                 val pass = txt_pass.text.toString()
-                auth.signInWithEmailAndPassword(email,pass).addOnCompleteListener{
-                    if(it.isSuccessful){
+
+                // Mostrar el diálogo de carga
+                val loadingDialog = AlertDialog.Builder(this)
+                    .setView(layoutInflater.inflate(R.layout.dialog_loading, null))
+                    .setCancelable(false)
+                    .create()
+                loadingDialog.show()
+
+                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
+                    loadingDialog.dismiss()
+
+                    if (it.isSuccessful) {
                         emailGlobal = it.result?.user?.email ?: ""
                         viewModel.buscarUsuario(it.result?.user?.uid ?: "")
-                    }else{
+                    } else {
                         showAlert()
                     }
                 }
@@ -98,17 +108,6 @@ class Login : AppCompatActivity() {
             val intent = Intent(this,registroUser::class.java)
             startActivity(intent)
         }
-
-        /*imgBGoogle.setOnClickListener{
-            val googleConf = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build()
-
-            val googleClient = GoogleSignIn.getClient(this,googleConf)
-
-            startActivityForResult(googleClient.signInIntent,GOOGLE_SIGN_IN)
-        }*/
     }
 
     private fun showAlert(){
