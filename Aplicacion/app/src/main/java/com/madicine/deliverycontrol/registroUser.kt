@@ -1,6 +1,5 @@
 package com.madicine.deliverycontrol
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -8,14 +7,11 @@ import android.widget.*
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
 
 class registroUser : AppCompatActivity() {
@@ -33,7 +29,6 @@ class registroUser : AppCompatActivity() {
     private lateinit var tvPasswordLengthWarning: TextView
     private lateinit var btnRegister: Button
     private lateinit var auth: FirebaseAuth
-    private var email: String? = null
 
     private val viewModel: UsuariosViewModel by viewModels()
 
@@ -94,21 +89,47 @@ class registroUser : AppCompatActivity() {
     }
 
     private fun registerUser() {
-        auth.createUserWithEmailAndPassword(etConfirmEmail.text.toString(), etConfirmPassword.text.toString())
-            .addOnCompleteListener {
-                if (it.isSuccessful) {
-                    email = it.result?.user?.email ?: ""
-                    showHome(email, etNombre.text.toString(), etApellido.text.toString(), ProviderType.BASIC)
+        val email = etConfirmEmail.text.toString()
+        val password = etConfirmPassword.text.toString()
+        val nombre = etNombre.text.toString()
+        val apellido = etApellido.text.toString()
+
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val uid = user?.uid ?: ""
+
+                    // Guardar usuario en la base de datos de la API inmediatamente
+                    viewModel.crearUsuario(nombre, apellido, uid)
+
+                    // Enviar correo de verificación
+                    user?.sendEmailVerification()?.addOnCompleteListener { emailTask ->
+                        if (emailTask.isSuccessful) {
+                            showAlertAndRedirect()
+                        } else {
+                            showAlert("Error", "No se pudo enviar el correo de verificación.")
+                        }
+                    }
                 } else {
-                    if (it.exception is FirebaseAuthUserCollisionException) {
-                        showAlertEmail()
+                    if (task.exception is FirebaseAuthUserCollisionException) {
+                        showAlert("Error", "El correo ya está en uso.")
                     } else {
-                        showAlert()
+                        showAlert("Error", "Se produjo un error al registrar el usuario.")
                     }
                 }
             }
     }
 
+    private fun showAlertAndRedirect() {
+        AlertDialog.Builder(this)
+            .setTitle("Registro exitoso")
+            .setMessage("Se ha enviado un correo de verificación. Por favor, verifica tu correo antes de iniciar sesión.")
+            .setPositiveButton("Aceptar") { _, _ ->
+                finish()
+            }
+            .show()
+    }
     private fun validateInput(): Boolean {
         var isValid = true
 
@@ -143,33 +164,10 @@ class registroUser : AppCompatActivity() {
         return isValid
     }
 
-    private fun showAlert() {
+    private fun showAlert(title: String, message: String) {
         AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage("Se ha producido un error creando al usuario")
-            .setPositiveButton("Aceptar", null)
-            .show()
-    }
-
-    private fun showHome(email: String?, nombre: String, apellido: String, provider: ProviderType) {
-        val uid = auth.currentUser?.uid
-        val usuario = Usuario(uid, nombre, apellido, email, "")
-
-        viewModel.crearUsuario(nombre, apellido, uid ?: "")
-
-        val menuIntent = Intent(this, MenuPrincipal::class.java).apply {
-            putExtra("usuario", usuario)
-            putExtra("provider", provider.name)
-        }
-        menuIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(menuIntent)
-        finish()
-    }
-
-    private fun showAlertEmail() {
-        AlertDialog.Builder(this)
-            .setTitle("Error")
-            .setMessage("El correo digitado ya se encuentra en uso")
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton("Aceptar", null)
             .show()
     }

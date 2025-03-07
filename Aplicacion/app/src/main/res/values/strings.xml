@@ -5,12 +5,13 @@
     <string name="btnPrincipal">Iniciar</string>
     <string name="btnLogin">Ingresar con</string>
     <string name="tlLogin">MDCS</string>
-    <string name="tlEmail">Correo Electronico</string>
+    <string name="tlEmail">Correo Electrónico</string>
     <string name="tlPass">Contraseña</string>
-    <string name="btnIniciarSesion">Inicio de Sesion</string>
+    <string name="btnIniciarSesion">Inicio de Sesión</string>
     <string name="tlRegistro">¿No tienes una cuenta? Regístrate</string>
+    <string name="tlRecuperarContrasena">¿Olvidaste tu contraseña?</string>
 
-    <!--Registro -->
+    <!-- Registro -->
     <string name="register_title">Registro de Usuario</string>
     <string name="btn_register">Registrar</string>
     <string name="hint_email">Correo Electrónico</string>
@@ -21,41 +22,43 @@
     <string name="hint_confirm_password">Confirmar Contraseña</string>
     <string name="warning_email_not_match">Los correos no coinciden</string>
     <string name="warning_password_not_match">Las contraseñas no coinciden</string>
-    <!--Registro -->
+    <string name="warning_email_invalid">El correo no tiene un formato válido</string>
+    <string name="warning_password_length">La contraseña debe tener al menos 6 caracteres</string>
+    <!-- Registro -->
 
-    <!--Menu Principal -->
+    <!-- Menú Principal -->
     <string name="tlPrincipalMenu">Inicio</string>
     <string name="tlUsuario">Texto</string>
     <string name="alertLogOut">¿Desea cerrar sesión?</string>
     <string name="logout_description">Cerrar sesión</string>
-    <!--Menu Principal -->
+    <!-- Menú Principal -->
 
-    <!--Nombre SharedPreferences -->
+    <!-- Nombre SharedPreferences -->
     <string name="prefs_file">deliverycontrol_prefs</string>
-    <!--Nombre SharedPreferences -->
+    <!-- Nombre SharedPreferences -->
 
-    <!--Texto Cards Menu Principal -->
+    <!-- Texto Cards Menú Principal -->
     <string name="card_scan">Escaneo de \n Medicamento</string>
     <string name="card_medicine">Error de \n Medicamento</string>
-    <string name="card_history">Historial de \n Busqueda</string>
-    <!--Texto Cards Menu Principal -->
+    <string name="card_history">Historial de \n Búsqueda</string>
+    <!-- Texto Cards Menú Principal -->
 
-    <!--Consulta Medicamentos -->
+    <!-- Consulta Medicamentos -->
     <string name="tlPrincipalMedicamentos">Tu Medicamento</string>
-    <!--Consulta Medicamentos -->
+    <!-- Consulta Medicamentos -->
 
-    <!--Historial -->
+    <!-- Historial -->
     <string name="tlPrincipalHistorial">Tu Historial</string>
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-    <!--Historial -->
+    <!-- Historial -->
 
-    <!--Reporte de Error -->
+    <!-- Reporte de Error -->
     <string name="tlPrincipalError">Reporte de Error en Medicamento</string>
     <string name="hitn_description">Describe el error</string>
     <string name="btnFoto">Tomar Foto</string>
     <string name="btnEnviarReporte">Enviar Reporte</string>
-    <!--Reporte de Error-->
+    <!-- Reporte de Error -->
 </resources>

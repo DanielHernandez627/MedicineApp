@@ -30,23 +30,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/iconprincipal" />
 
-    <Button
-        android:id="@+id/imgBGoogle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:background="@drawable/button_border"
-        android:drawableEnd="@drawable/google"
-        android:padding="16dp"
-        android:text="@string/btnLogin"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:visibility="gone"
-        android:textSize="19sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
-
     <TextView
         android:id="@+id/tl_email"
         android:layout_width="wrap_content"
@@ -56,14 +39,13 @@
         android:text="@string/tlEmail"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgBGoogle" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
 
     <EditText
         android:id="@+id/txt_email"
         android:layout_width="290dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_edittext"
-        android:ems="10"
         android:inputType="textEmailAddress"
         android:hint="@string/hint_email"
         android:textAlignment="center"
@@ -88,7 +70,6 @@
         android:layout_width="290dp"
         android:layout_height="48dp"
         android:background="@drawable/rounded_edittext"
-        android:ems="10"
         android:inputType="textPassword"
         android:textAlignment="center"
         android:hint="@string/hint_password"
@@ -112,16 +93,30 @@
         app:layout_constraintTop_toBottomOf="@+id/txt_pass" />
 
     <Button
+        android:id="@+id/btnForgotPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@android:color/transparent"
+        android:text="@string/tlRecuperarContrasena"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_register_redirect" />
+
+    <Button
         android:id="@+id/btnIniciarSesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
         android:layout_marginTop="28dp"
         android:background="@drawable/shape_button_blue"
         android:text="@string/btnIniciarSesion"
         android:textAlignment="center"
         android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_register_redirect" />
-
+        app:layout_constraintTop_toBottomOf="@+id/btnForgotPassword" />
 </androidx.constraintlayout.widget.ConstraintLayout>
