@@ -2,10 +2,8 @@ package com.madicine.deliverycontrol
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -13,12 +11,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.Observer
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.firebase.Firebase
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.madicine.deliverycontrol.Entities.Usuario
 import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
 
@@ -27,20 +21,19 @@ class Login : AppCompatActivity() {
     private lateinit var btnIniciarSesion: Button
     private lateinit var txt_email: EditText
     private lateinit var txt_pass: EditText
-    private lateinit var auth: FirebaseAuth;
+    private lateinit var auth: FirebaseAuth
     private lateinit var btn_register_redirect: Button
-    private lateinit var imgBGoogle: Button
-    private val GOOGLE_SIGN_IN = 100
-    private var emailGlobal : String? = null
+    private lateinit var btnForgotPassword: Button
+    private var emailGlobal: String? = null
 
-    //Declaracion de variable ViewModel
+    // ViewModel
     private val viewModel: UsuariosViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        auth = Firebase.auth
         auth = FirebaseAuth.getInstance()
+
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -49,36 +42,32 @@ class Login : AppCompatActivity() {
             insets
         }
 
-        //Inicializacion de objetos graficos
+        // Inicialización de vistas
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion)
         txt_email = findViewById(R.id.txt_email)
         txt_pass = findViewById(R.id.txt_pass)
         btn_register_redirect = findViewById(R.id.btn_register_redirect)
-        imgBGoogle = findViewById(R.id.imgBGoogle)
+        btnForgotPassword = findViewById(R.id.btnForgotPassword)
 
-        //Configuracion de inicio
         setUp()
 
-        //Lectura de ViewModel
+        // Observador del ViewModel
         viewModel.usuario.observe(this, Observer { usuario ->
             usuario?.let {
-                usuario.let {
-                    showHome(emailGlobal ?: "",it.nombre,it.apellido,it.udi)
-                }
+                showHome(emailGlobal ?: "", it.nombre, it.apellido, it.udi)
             } ?: run {
                 println("Error al obtener la respuesta")
             }
         })
     }
 
-    //Limpieza de campos email y password en caso de reiniciar la activity
     override fun onResume() {
         super.onResume()
         txt_email.text = null
         txt_pass.text = null
     }
 
-    private fun setUp(){
+    private fun setUp() {
         btnIniciarSesion.setOnClickListener {
             if (txt_email.text.isNotEmpty() && txt_pass.text.isNotEmpty()) {
                 val email = txt_email.text.toString()
@@ -91,43 +80,84 @@ class Login : AppCompatActivity() {
                     .create()
                 loadingDialog.show()
 
-                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
+                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener { task ->
                     loadingDialog.dismiss()
 
-                    if (it.isSuccessful) {
-                        emailGlobal = it.result?.user?.email ?: ""
-                        viewModel.buscarUsuario(it.result?.user?.uid ?: "")
+                    if (task.isSuccessful) {
+                        val user = task.result?.user
+
+                        if (user?.isEmailVerified == true) {
+                            emailGlobal = user.email ?: ""
+                            viewModel.buscarUsuario(user.uid ?: "")
+                        } else {
+                            showAlert(
+                                "Verificación requerida",
+                                "Debes verificar tu correo antes de iniciar sesión."
+                            )
+                            auth.signOut() // Cierra sesión para evitar acceso sin verificación
+                        }
                     } else {
-                        showAlert()
+                        showAlert("Advertencia", "Usuario o contraseña incorrectos")
                     }
                 }
             }
         }
 
-        btn_register_redirect.setOnClickListener{
-            val intent = Intent(this,registroUser::class.java)
+        btn_register_redirect.setOnClickListener {
+            val intent = Intent(this, registroUser::class.java)
             startActivity(intent)
+        }
+
+        // Funcionalidad para recuperar contraseña con AlertDialog
+        btnForgotPassword.setOnClickListener {
+            showPasswordResetDialog()
         }
     }
 
-    private fun showAlert(){
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Advertencia")
-        builder.setMessage("Usuario o contraseña incorrectos")
-        builder.setPositiveButton("Aceptar",null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
+    private fun showPasswordResetDialog() {
+        val input = EditText(this)
+        input.hint = "Ingrese su correo"
+
+        AlertDialog.Builder(this)
+            .setTitle("Recuperar contraseña")
+            .setMessage("Ingrese su correo para recibir un enlace de recuperación:")
+            .setView(input)
+            .setPositiveButton("Enviar") { _, _ ->
+                val email = input.text.toString().trim()
+                if (email.isNotEmpty()) {
+                    sendPasswordResetEmail(email)
+                } else {
+                    showAlert("Advertencia", "Debe ingresar un correo válido.")
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
     }
 
-    /**
-     * Funcion de paso a la pantalla de menu principal
-     * */
-    private fun showHome(email:String,nombre: String?, apellido: String?,uid: String?){
+    private fun sendPasswordResetEmail(email: String) {
+        auth.sendPasswordResetEmail(email)
+            .addOnSuccessListener {
+                showAlert("Recuperación de contraseña", "Se ha enviado un correo para restablecer tu contraseña.")
+            }
+            .addOnFailureListener {
+                showAlert("Error", "No se pudo enviar el correo de recuperación. Verifica que el correo esté registrado.")
+            }
+    }
+
+    private fun showAlert(title: String, message: String) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Aceptar", null)
+            .show()
+    }
+
+    private fun showHome(email: String, nombre: String?, apellido: String?, uid: String?) {
         val provider = ProviderType.BASIC
-        val usuario = Usuario(uid , nombre ?: "",apellido ?: "",email,"");
-        val menuIntent = Intent(this,MenuPrincipal::class.java).apply {
-            putExtra("usuario",usuario)
-            putExtra("provider",provider.name)
+        val usuario = Usuario(uid, nombre ?: "", apellido ?: "", email, "")
+        val menuIntent = Intent(this, MenuPrincipal::class.java).apply {
+            putExtra("usuario", usuario)
+            putExtra("provider", provider.name)
         }
         startActivity(menuIntent)
     }
