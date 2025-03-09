@@ -61,4 +61,29 @@
     <string name="btnFoto">Tomar Foto</string>
     <string name="btnEnviarReporte">Enviar Reporte</string>
     <!-- Reporte de Error -->
+
+    <string name="terminos_y_condiciones">TÉRMINOS Y CONDICIONES DE USO
+        MEDICINE DELIVERY CONTROL SYSTEM
+        Fecha de entrada en vigencia: 09-03-2025
+        1. ACEPTACIÓN DE LOS TÉRMINOS Y CONDICIONES
+        Al descargar, instalar y utilizar la aplicación "Medicine Delivery Control System" (en adelante, "la Aplicación"), el usuario acepta y se obliga a cumplir con los presentes Términos y Condiciones. Si el usuario no está de acuerdo con ellos, deberá abstenerse de utilizar la Aplicación.
+        2. OBJETO DE LA APLICACIÓN
+        La Aplicación permite la lectura de códigos QR o de barras de medicamentos con el fin de proporcionar información sobre sus contraindicaciones según lo indicado por el fabricante. La información presentada es de prueba y no sustituye el consejo médico profesional.
+        3. LIMITACIÓN DE RESPONSABILIDAD
+            - La Aplicación no receta medicamentos ni proporciona recomendaciones sobre su consumo.
+            - La información presentada no debe ser utilizada como diagnóstico, tratamiento o prescripción médica.
+            - El usuario reconoce que el uso de la Aplicación es bajo su propia responsabilidad y que debe consultar a un profesional de la salud ante cualquier duda sobre el uso de medicamentos.
+        4. USO ADECUADO DE LA APLICACIÓN
+            El usuario se compromete a utilizar la Aplicación únicamente para fines informativos y a no hacer un uso indebido de la misma. Queda prohibida la utilización de la Aplicación para propósitos fraudulentos o contrarios a la ley.
+        5. PROTECCIÓN DE DATOS PERSONALES
+            La Aplicación no recopila ni almacena datos personales sensibles de los usuarios. Cualquier dato procesado se maneja conforme a la Ley 1581 de 2012 de Protección de Datos Personales en Colombia.
+        6. PROPIEDAD INTELECTUAL
+            La Aplicación y todo su contenido, incluyendo diseño, textos, imágenes y código fuente, están protegidos por las leyes de propiedad intelectual. No se permite la reproducción, distribución o modificación de la Aplicación sin autorización previa.
+        7. MODIFICACIONES A LOS TÉRMINOS Y CONDICIONES
+            Nos reservamos el derecho de modificar estos Términos y Condiciones en cualquier momento. Cualquier cambio será publicado en la Aplicación y entrará en vigor desde su publicación.
+        8. LEGISLACIÓN APLICABLE Y JURISDICCIÓN
+            Estos Términos y Condiciones se rigen por las leyes de la República de Colombia. Cualquier controversia será resuelta por los tribunales colombianos.
+        9. CONTACTO
+            Para consultas o dudas sobre estos Términos y Condiciones, puede contactarnos a dhernandezc6@ucentral.edu.co.
+    </string>
 </resources>
