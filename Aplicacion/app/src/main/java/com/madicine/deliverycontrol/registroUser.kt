@@ -68,24 +68,39 @@ class registroUser : AppCompatActivity() {
     }
 
     private fun showTermsDialog() {
+        val scrollView = ScrollView(this)
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(40, 20, 40, 20)
+        }
+
+        val textView = TextView(this).apply {
+            text = getString(R.string.terminos_y_condiciones)
+            textSize = 14f
+            setPadding(20, 20, 20, 20)
+        }
+
         val checkBox = CheckBox(this).apply {
             text = "Acepto los términos y condiciones"
         }
 
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle("Términos y Condiciones")
-        builder.setMessage("Aquí iría la descripción de los términos y condiciones...")
-        builder.setView(checkBox)
-        builder.setPositiveButton("Aceptar") { dialog, _ ->
-            if (checkBox.isChecked) {
-                registerUser()
-            } else {
-                Toast.makeText(this, "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show()
+        layout.addView(textView)
+        layout.addView(checkBox)
+        scrollView.addView(layout)
+
+        AlertDialog.Builder(this)
+            .setTitle("Términos y Condiciones")
+            .setView(scrollView)
+            .setPositiveButton("Aceptar") { dialog, _ ->
+                if (checkBox.isChecked) {
+                    registerUser()
+                } else {
+                    Toast.makeText(this, "Debes aceptar los términos y condiciones", Toast.LENGTH_SHORT).show()
+                }
+                dialog.dismiss()
             }
-            dialog.dismiss()
-        }
-        builder.setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
-        builder.show()
+            .setNegativeButton("Cancelar") { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     private fun registerUser() {
