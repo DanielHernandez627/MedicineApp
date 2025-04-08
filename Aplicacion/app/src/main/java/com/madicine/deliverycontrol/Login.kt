@@ -14,17 +14,23 @@ import androidx.lifecycle.Observer
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.madicine.deliverycontrol.Entities.Usuario
+import com.madicine.deliverycontrol.Repositories.AuthRepository
+import com.madicine.deliverycontrol.Services.FirebaseAuthService
 import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class Login : AppCompatActivity() {
 
     private lateinit var btnIniciarSesion: Button
     private lateinit var txt_email: EditText
     private lateinit var txt_pass: EditText
-    private lateinit var auth: FirebaseAuth
     private lateinit var btn_register_redirect: Button
     private lateinit var btnForgotPassword: Button
     private var emailGlobal: String? = null
+
+    private lateinit var authRepository: AuthRepository
 
     // ViewModel
     private val viewModel: UsuariosViewModel by viewModels()
@@ -32,7 +38,7 @@ class Login : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        auth = FirebaseAuth.getInstance()
+        authRepository = FirebaseAuthService(FirebaseAuth.getInstance())
 
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
@@ -42,7 +48,6 @@ class Login : AppCompatActivity() {
             insets
         }
 
-        // Inicialización de vistas
         btnIniciarSesion = findViewById(R.id.btnIniciarSesion)
         txt_email = findViewById(R.id.txt_email)
         txt_pass = findViewById(R.id.txt_pass)
@@ -51,7 +56,6 @@ class Login : AppCompatActivity() {
 
         setUp()
 
-        // Observador del ViewModel
         viewModel.usuario.observe(this, Observer { usuario ->
             usuario?.let {
                 showHome(emailGlobal ?: "", it.nombre, it.apellido, it.udi)
@@ -73,29 +77,25 @@ class Login : AppCompatActivity() {
                 val email = txt_email.text.toString()
                 val pass = txt_pass.text.toString()
 
-                // Mostrar el diálogo de carga
                 val loadingDialog = AlertDialog.Builder(this)
                     .setView(layoutInflater.inflate(R.layout.dialog_loading, null))
                     .setCancelable(false)
                     .create()
                 loadingDialog.show()
 
-                auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener { task ->
+                CoroutineScope(Dispatchers.Main).launch {
+                    val user = authRepository.signIn(email, pass)
                     loadingDialog.dismiss()
 
-                    if (task.isSuccessful) {
-                        val user = task.result?.user
-
-                        if (user?.isEmailVerified == true) {
-                            emailGlobal = user.email ?: ""
-                            viewModel.buscarUsuario(user.uid ?: "")
-                        } else {
-                            showAlert(
-                                "Verificación requerida",
-                                "Debes verificar tu correo antes de iniciar sesión."
-                            )
-                            auth.signOut() // Cierra sesión para evitar acceso sin verificación
-                        }
+                    if (user != null && authRepository.isEmailVerified(user)) {
+                        emailGlobal = authRepository.getEmail(user)
+                        viewModel.buscarUsuario(authRepository.getUid(user))
+                    } else if (user != null) {
+                        showAlert(
+                            "Verificación requerida",
+                            "Debes verificar tu correo antes de iniciar sesión."
+                        )
+                        authRepository.signOut()
                     } else {
                         showAlert("Advertencia", "Usuario o contraseña incorrectos")
                     }
@@ -104,11 +104,9 @@ class Login : AppCompatActivity() {
         }
 
         btn_register_redirect.setOnClickListener {
-            val intent = Intent(this, registroUser::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, registroUser::class.java))
         }
 
-        // Funcionalidad para recuperar contraseña con AlertDialog
         btnForgotPassword.setOnClickListener {
             showPasswordResetDialog()
         }
@@ -125,23 +123,21 @@ class Login : AppCompatActivity() {
             .setPositiveButton("Enviar") { _, _ ->
                 val email = input.text.toString().trim()
                 if (email.isNotEmpty()) {
-                    sendPasswordResetEmail(email)
+                    authRepository.sendPasswordReset(
+                        email,
+                        onSuccess = {
+                            showAlert("Recuperación de contraseña", "Se ha enviado un correo para restablecer tu contraseña.")
+                        },
+                        onError = {
+                            showAlert("Error", "No se pudo enviar el correo de recuperación. Verifica que el correo esté registrado.")
+                        }
+                    )
                 } else {
                     showAlert("Advertencia", "Debe ingresar un correo válido.")
                 }
             }
             .setNegativeButton("Cancelar", null)
             .show()
-    }
-
-    private fun sendPasswordResetEmail(email: String) {
-        auth.sendPasswordResetEmail(email)
-            .addOnSuccessListener {
-                showAlert("Recuperación de contraseña", "Se ha enviado un correo para restablecer tu contraseña.")
-            }
-            .addOnFailureListener {
-                showAlert("Error", "No se pudo enviar el correo de recuperación. Verifica que el correo esté registrado.")
-            }
     }
 
     private fun showAlert(title: String, message: String) {

@@ -1,5 +1,6 @@
 package com.madicine.deliverycontrol
 
+import AuthRepository
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -9,10 +10,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthUserCollisionException
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
+import com.madicine.deliverycontrol.Services.FirebaseAuthService
 import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class registroUser : AppCompatActivity() {
 
@@ -28,7 +30,9 @@ class registroUser : AppCompatActivity() {
     private lateinit var tvPasswordWarning: TextView
     private lateinit var tvPasswordLengthWarning: TextView
     private lateinit var btnRegister: Button
+
     private lateinit var auth: FirebaseAuth
+    private lateinit var authService: AuthRepository
 
     private val viewModel: UsuariosViewModel by viewModels()
 
@@ -37,9 +41,10 @@ class registroUser : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseApp.initializeApp(this)
-        auth = Firebase.auth
-        setContentView(R.layout.activity_registro_user)
+        auth = FirebaseAuth.getInstance()
+        authService = FirebaseAuthService(auth)
 
+        setContentView(R.layout.activity_registro_user)
         initViews()
         setUp()
     }
@@ -109,42 +114,28 @@ class registroUser : AppCompatActivity() {
         val nombre = etNombre.text.toString()
         val apellido = etApellido.text.toString()
 
-        auth.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    val uid = user?.uid ?: ""
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val user = authService.signUp(email, password)
+                val uid = authService.getUid(user)
 
-                    // Guardar usuario en la base de datos de la API inmediatamente
-                    viewModel.crearUsuario(nombre, apellido, uid)
+                viewModel.crearUsuario(nombre, apellido, uid)
 
-                    // Enviar correo de verificación
-                    user?.sendEmailVerification()?.addOnCompleteListener { emailTask ->
-                        if (emailTask.isSuccessful) {
-                            showAlertAndRedirect()
-                        } else {
-                            showAlert("Error", "No se pudo enviar el correo de verificación.")
-                        }
-                    }
+                authService.sendEmailVerification(user,
+                    onSuccess = { showAlertAndRedirect() },
+                    onError = { showAlert("Error", "No se pudo enviar el correo de verificación.") }
+                )
+
+            } catch (e: Exception) {
+                if (e.message?.contains("email address is already in use") == true) {
+                    showAlert("Error", "El correo ya está en uso.")
                 } else {
-                    if (task.exception is FirebaseAuthUserCollisionException) {
-                        showAlert("Error", "El correo ya está en uso.")
-                    } else {
-                        showAlert("Error", "Se produjo un error al registrar el usuario.")
-                    }
+                    showAlert("Error", "Se produjo un error al registrar el usuario.")
                 }
             }
+        }
     }
 
-    private fun showAlertAndRedirect() {
-        AlertDialog.Builder(this)
-            .setTitle("Registro exitoso")
-            .setMessage("Se ha enviado un correo de verificación. Por favor, verifica tu correo antes de iniciar sesión.")
-            .setPositiveButton("Aceptar") { _, _ ->
-                finish()
-            }
-            .show()
-    }
     private fun validateInput(): Boolean {
         var isValid = true
 
@@ -184,6 +175,16 @@ class registroUser : AppCompatActivity() {
             .setTitle(title)
             .setMessage(message)
             .setPositiveButton("Aceptar", null)
+            .show()
+    }
+
+    private fun showAlertAndRedirect() {
+        AlertDialog.Builder(this)
+            .setTitle("Registro exitoso")
+            .setMessage("Se ha enviado un correo de verificación. Por favor, verifica tu correo antes de iniciar sesión.")
+            .setPositiveButton("Aceptar") { _, _ ->
+                finish()
+            }
             .show()
     }
 }
