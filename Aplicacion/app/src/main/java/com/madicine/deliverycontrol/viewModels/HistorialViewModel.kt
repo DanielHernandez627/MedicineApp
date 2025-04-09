@@ -18,7 +18,6 @@ class HistorialViewModel : ViewModel() {
 
     private val repository = HistoryRepository()
 
-
     //Funcion para la busqueda de historial en base UID del usuario
     fun obtenerHistorial(uuid: String) {
         viewModelScope.launch(Dispatchers.IO) {
