@@ -1,8 +1,8 @@
 package com.madicine.deliverycontrol.Services
 
-import AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.madicine.deliverycontrol.Repositories.AuthRepository
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthService(private val auth: FirebaseAuth) : AuthRepository {

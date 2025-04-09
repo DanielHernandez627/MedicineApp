@@ -1,6 +1,5 @@
 package com.madicine.deliverycontrol
 
-import AuthRepository
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
@@ -10,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.madicine.deliverycontrol.Repositories.AuthRepository
 import com.madicine.deliverycontrol.Services.FirebaseAuthService
 import com.madicine.deliverycontrol.viewModels.UsuariosViewModel
 import kotlinx.coroutines.CoroutineScope
