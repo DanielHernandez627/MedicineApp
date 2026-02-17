@@ -177,16 +177,6 @@ MedicineApp/
 6. Al escanear un código, se muestra la información del medicamento
 7. Opción de reportar problemas con fotografía y descripción
 
-## 👥 Contribución
-
-Este es un proyecto académico. Si deseas contribuir:
-
-1. Fork el repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/NuevaCaracteristica`)
-3. Commit tus cambios (`git commit -am 'Agrega nueva característica'`)
-4. Push a la rama (`git push origin feature/NuevaCaracteristica`)
-5. Crea un Pull Request
-
 ## 📄 Licencia
 
 Este proyecto es de código abierto y está disponible para fines educativos.
